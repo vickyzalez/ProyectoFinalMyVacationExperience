@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyVacationExperience</string>
+    <string name="action_settings">Settings</string>
+    <string name="newtripname">Nombre del destino</string>
+    <string name="newtripfrom">Fecha desde</string>
+    <string name="newtripto">Fecha hasta</string>
+    <string name="btnCancel">Cancelar</string>
+    <string name="btnOk">Aceptar</string>
+    <string name="pathFileTrip">trips.txt</string>
+</resources>
