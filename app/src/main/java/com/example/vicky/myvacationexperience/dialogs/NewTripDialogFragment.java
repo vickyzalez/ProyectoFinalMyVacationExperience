@@ -15,7 +15,11 @@ import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.entities.Trip;
+import com.example.vicky.myvacationexperience.utilities.FileHandler;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.Calendar;
 
 /**
@@ -31,7 +35,6 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
     private Boolean isFrom;
     private Button btnTripCancel;
     private Button btnTripOk;
-    private Trip trip;
     private static Activity activity;
 
     /**
@@ -92,23 +95,50 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
     public void onClick(View view) {
 
         switch (view.getId()){
+
             case R.id.editFromTrip:
                 this.isFrom = true;
                 showDatePicker();
                 break;
+
             case R.id.editToTrip:
                 this.isFrom = false;
                 showDatePicker();
                 break;
+
             case R.id.btnNewTripCancel:
                 this.dismiss();
                 break;
+
             case R.id.btnNewTripOk:
-                //TODO buscar el id con una funcion
-                //TODO crear el trip
-                //TODO guardar el trip en el archivo
+
+                //buscamos el id que tendra el nuevo Trip
+                    Integer idTrip = 0;
+                try {
+                    idTrip = FileHandler.getIdNextTrip(activity);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                //creamos el objeto
+                Trip trip = new Trip(idTrip,
+                        this.tripName.getText().toString(),
+                        this.tripFrom.getText().toString(),
+                        this.tripTo.getText().toString(), "");
+
+                //TODO implementar el llamado a la API que devuelva la fotito
+
+                //se guarda en el celu
+                try {
+                    FileHandler.saveTrip(trip, activity);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 //TODO llamar al nuevo activity (el de listado de layers)
-                //this.trip = new Trip()
+
                 this.dismiss();
                 break;
         }
@@ -134,7 +164,7 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
 
     @Override
     public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-        Log.d("dia", String.valueOf(i) + "-" + String.valueOf(i1) + "-" + String.valueOf(i2));
+
         this.datePicker.setVisibility(View.GONE);
         this.showViews(View.VISIBLE);
 

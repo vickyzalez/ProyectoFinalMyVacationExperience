@@ -1,9 +1,12 @@
 package com.example.vicky.myvacationexperience.utilities;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.entities.Place;
 import com.example.vicky.myvacationexperience.entities.Trip;
+import com.example.vicky.myvacationexperience.entities.LayerTrip;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,10 +27,11 @@ import java.util.List;
 
 public class FileHandler {
 
-    public static String readFile(Context context, Integer idTrip)throws IOException {
+    //devuelve un trip en formato file
+    private static String readFile(Context context, Integer idTrip)throws IOException {
 
         File directory = context.getFilesDir();
-        File f=new File(directory, String.valueOf(idTrip)); //sin el .txt
+        File f=new File(directory, String.valueOf(idTrip));
         FileReader fr=new FileReader(f);
         BufferedReader br=new BufferedReader(fr);
         String text="";
@@ -40,27 +44,25 @@ public class FileHandler {
         return text;
     }
 
-    /*
-    //TODO para ver todos los archivos
-    public static String readFiles(Context context)throws IOException {
 
+    //lee todos los archivos y devuelve los Jsons en formato String
+    private static List<String> readFiles(Context context)throws IOException {
+
+        List<String> jsons = new ArrayList<String>();
         File directory = context.getFilesDir();
-        File f=new File(directory, String.valueOf(idTrip)); //sin el .txt
-        FileReader fr=new FileReader(f);
-        BufferedReader br=new BufferedReader(fr);
-        String text="";
-        String line;
-        while((line=br.readLine())!=null)
-        {
-            text+=line;
+        File[] files = directory.listFiles();
+        for (File file: files){
+
+            jsons.add(readFile(context, Integer.parseInt(file.getName())));
+
         }
-        br.close();
-        return text;
+
+        return jsons;
+
     }
-    */
 
-
-    public static void writeFile(String path, String text, Context context)throws IOException {
+    //se escribe el trip en el celu
+    private static void writeFile(String path, String text, Context context)throws IOException {
         File directory = context.getFilesDir();
         File f=new File(directory, path);
         FileWriter fw=new FileWriter(f);
@@ -70,45 +72,146 @@ public class FileHandler {
         bw.close();
     }
 
-    //TODO esto deberia ser para un solo trip, hay q cambiarlo
+    private static Trip convertFromJson(JSONObject object) throws JSONException {
 
+        Trip trip = new Trip();
+
+        trip.setId(object.getInt("idTrip"));
+        trip.setName(object.getString("nameTrip"));
+        trip.setFromDate(object.getString("fromDate"));
+        trip.setToDate(object.getString("toDate"));
+        trip.setPhoto(object.getString("photo"));
+
+        JSONArray arrayJsonLayer = object.getJSONArray("layers");
+        List<LayerTrip> layers = new ArrayList<>();
+        for(int i=0;i<arrayJsonLayer.length();i++) {
+
+            LayerTrip layer = new LayerTrip();
+
+            JSONObject layerJson = arrayJsonLayer.getJSONObject(i);
+
+            layer.setName(layerJson.getString("nameLayer"));
+            layer.setIcon(layerJson.getString("icon"));
+            layer.setVisible(layerJson.getBoolean("visible"));
+
+            JSONArray arrayJsonPlace = object.getJSONArray("places");
+
+            List<Place> places = new ArrayList<>();
+            for(int j=0;j<arrayJsonPlace.length();j++) {
+
+                Place place = new Place();
+
+                JSONObject placeJson = arrayJsonLayer.getJSONObject(j);
+
+                place.setId(placeJson.getInt("idPlace"));
+                place.setName(placeJson.getString("namePlace"));
+                place.setDescription(placeJson.getString("description"));
+                place.setLatitude(placeJson.getDouble("latitude"));
+                place.setLongitude(placeJson.getDouble("longitude"));
+
+
+            }
+            layer.setPlaces(places);
+        }
+
+        trip.setLayers(layers);
+
+        return trip;
+    }
     /*
-    public static List<Trip> getTripsJSON(Context context)throws JSONException, IOException {
-        String json= readFile(context, idTrip);
-        JSONObject objet = new JSONObject(json);
-        JSONArray arrayJson = objet.getJSONArray("trips");
-        List<Trip> trips = new ArrayList<>();
-        for(int i=0;i<arrayJson.length();i++)
-        {
-            Trip trip = new Trip();
-            JSONObject tripJson = arrayJson.getJSONObject(i);
-            //TODO mapear los atributos
+    Metodos que se usan desde la app
+    */
 
-            trip. = tripJson.getString("nombre");
-            trip. = tripJson.getBoolean("hecho");
-            trips.add(trip);
+    //devuelve el ID del proximo trip
+    public static Integer getIdNextTrip(Context context)throws IOException {
+
+        Integer nextId = 0;
+
+        File directory = context.getFilesDir();
+        File[] files = directory.listFiles();
+        for (File file: files){
+            Integer currentId = Integer.parseInt(file.getName());
+            if (nextId < currentId){
+                nextId = currentId;
+            }
+
+        }
+
+        return nextId+1;
+
+    }
+
+    //devuelve el listado de trips para poder mostrar en pantalla
+    public static List<Trip> getTripsToView(Context context) throws JSONException, IOException{
+
+        List<Trip> trips = new ArrayList<Trip>();
+        List<String> tripsString = readFiles(context);
+
+        for (String trip: tripsString){
+
+            trips.add(convertFromJson(new JSONObject(trip)));
+
         }
 
         return trips;
     }
 
+    //te devuelve un Trip de un string.
+    public static Trip getTrip(Context context, Integer idTrip)throws JSONException, IOException {
 
-    public static void putTripsJSON(List<Trip> trips, Context context)throws JSONException, IOException
-    {
-        JSONObject json = new JSONObject();
-        JSONArray list = new JSONArray();
-        for(Trip act:trips)
-        {
-            JSONObject jsonObject = new JSONObject();
-            //TODO mapear
-            jsonObject.put("nombre", act.getNombre());
-            jsonObject.put("hecho", act.getHecho());
-            list.put(jsonObject);
-        }
-        json.put("trips", list);
+        String json= readFile(context, idTrip);
+        JSONObject object = new JSONObject(json);
+
+        return convertFromJson(object);
+
 
     }
 
-    */
+
+
+
+    // guardo un nuevo Trip o una modificación del trip
+    //TODO testear si se pisa
+    public static void saveTrip(Trip trip, Context context)throws JSONException, IOException
+    {
+        JSONObject json = new JSONObject();
+        JSONArray layers = new JSONArray();
+
+        json.put("idTrip", trip.getId());
+        json.put("nameTrip", trip.getName());
+        json.put("fromDate", trip.getFromDate());
+        json.put("toDate", trip.getToDate());
+        json.put("photo", trip.getPhoto());
+
+        for(LayerTrip layer: trip.getLayers()) {
+
+            JSONArray places = new JSONArray();
+
+            JSONObject jsonLayer = new JSONObject();
+            jsonLayer.put("nameLayer", layer.getName());
+            jsonLayer.put("icon", layer.getIcon());
+            jsonLayer.put("visible", layer.getVisible());
+
+            for(Place place: layer.getPlaces()){
+
+                JSONObject jsonPlace = new JSONObject();
+                jsonPlace.put("idPlace", place.getId());
+                jsonPlace.put("namePlace", place.getName());
+                jsonPlace.put("description", place.getDescription());
+                jsonPlace.put("latitude", place.getLatitude());
+                jsonPlace.put("longitude", place.getLongitude());
+
+                places.put(jsonPlace);
+
+            }
+
+            layers.put(jsonLayer);
+        }
+        json.put("layers", layers);
+
+        writeFile(String.valueOf(trip.getId()), json.toString(), context);
+
+
+    }
 
 }

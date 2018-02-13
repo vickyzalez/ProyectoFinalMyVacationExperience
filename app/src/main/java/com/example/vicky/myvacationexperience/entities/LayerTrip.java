@@ -7,11 +7,15 @@ import java.util.List;
  * Created by Vicky on 10/2/2018.
  */
 
-class LayerTrip {
+public class LayerTrip {
     private String name;
     private String icon;
     private List<Place> places;
     private Boolean visible;
+
+    public LayerTrip(){
+
+    }
 
     public LayerTrip(String name, String icon, Boolean visible) {
         this.name = name;

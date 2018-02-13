@@ -4,12 +4,16 @@ package com.example.vicky.myvacationexperience.entities;
  * Created by Vicky on 10/2/2018.
  */
 
-class Place {
+public class Place {
     private long id;
     private String name;
     private String description;
     private double latitude;
     private double longitude;
+
+    public Place(){
+
+    }
 
     public Place(long id, String name, String description, double latitude, double longitude) {
         this.id = id;

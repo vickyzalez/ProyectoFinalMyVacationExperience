@@ -1,0 +1,57 @@
+{"trip": {
+  "idTrip": 1,
+  "nameTrip": "Nueva York",
+  "fromDate": "26/7/2018",
+  "toDate": "9/8/2018",
+  "photo": "https://media-cdn.tripadvisor.com/media/photo-s/0e/9a/e3/1d/freedom-tower.jpg",
+  "layers": [
+    {
+      "nameLayer": "Shopping",
+      "icon": "shopping.ico",
+      "visible": true,
+      "places": [{
+        "idPlace": 1234135,
+        "namePlace": "Dylan's Candy Bar",
+        "description": "Yummyyy",
+        "latitude": 34.3123123,
+        "longitude": -34.3123123
+      },
+        {
+          "idPlace": 1234135,
+          "namePlace": "Rockefeller Center",
+          "description": "Best building ever!",
+          "latitude": 34.3123123,
+          "longitude": -134.3123123
+        },
+        {
+          "idPlace": 1234135,
+          "namePlace": "Rockefeller Center",
+          "description": "Best building ever!",
+          "latitude": 34.3123123,
+          "longitude": -34.3123123
+        }
+      ]
+    },
+    {
+      "nameLayer": "Visits",
+      "icon": "restaurant.ico",
+      "visible": false,
+      "places": [{
+        "idPlace": 1234135,
+        "namePlace": "Rockefeller Center",
+        "description": "Best building ever!",
+        "latitude": 34.3123123,
+        "longitude": 234.3123123
+
+      },
+        {
+          "idPlace": 1234135,
+          "namePlace": "Rockefeller Center",
+          "description": "Best building ever!",
+          "latitude": 34.3123123,
+          "longitude": -14.3123123
+
+        }
+      ]
+    }]
+}}
