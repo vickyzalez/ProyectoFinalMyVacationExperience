@@ -12,6 +12,7 @@ import java.util.List;
 public class TripListModel  {
 
     private List<Trip> trips;
+
     public TripListModel()
     {
         this.trips= new ArrayList<Trip>();

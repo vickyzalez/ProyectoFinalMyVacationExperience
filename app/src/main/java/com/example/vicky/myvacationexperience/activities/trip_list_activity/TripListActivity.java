@@ -12,17 +12,30 @@ import android.view.MenuItem;
 
 import com.example.vicky.myvacationexperience.R;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 public class TripListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.trip_list_main);
-        ActionBar bar=this.getSupportActionBar();
+
+        ActionBar bar = this.getSupportActionBar();
         bar.setTitle("My Vacation Experience");
 
         TripListModel model = new TripListModel();
-        TripListControl ctrl = new TripListControl(this, model);
+        TripListControl ctrl = null;
+        try {
+            ctrl = new TripListControl(this, model);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         TripListView view = new TripListView(ctrl, this);
 
         ctrl.setView(view); //se le inserta la view porque no se instancia en el mismo momento

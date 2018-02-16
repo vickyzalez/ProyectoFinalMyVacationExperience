@@ -24,8 +24,10 @@ public class TripListView extends RecyclerView.Adapter<ItemTripViewHolder> {
     private TripListControl ctrl;
 
     public TripListView(TripListControl ctrl,Activity activity) {
+        //boton nuevo trip
         this.addTrip = (FloatingActionButton) activity.findViewById(R.id.addTrip);
         addTrip.setOnClickListener(ctrl); //Es el controlador quien implementa Listener
+
         this.recyclerView = (RecyclerView) activity.findViewById(R.id.trips);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity); //manejador de lista
         recyclerView.setLayoutManager(layoutManager);
@@ -38,8 +40,10 @@ public class TripListView extends RecyclerView.Adapter<ItemTripViewHolder> {
 
     @Override
     public ItemTripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trip, parent, false);
         v.setOnClickListener(ctrl);
+
         ItemTripViewHolder itemTripViewHolder = new ItemTripViewHolder(v);
         return itemTripViewHolder;
     }
@@ -48,8 +52,8 @@ public class TripListView extends RecyclerView.Adapter<ItemTripViewHolder> {
     public void onBindViewHolder(ItemTripViewHolder holder, int position) {
         Trip trip = ctrl.getTrips().get(position);
         holder.getTxtTripName().setText(trip.getName());
-        holder.getTxtDateFrom().setText(trip.getFromDate().toString());
-        holder.getTxtDateTo().setText(trip.getToDate().toString());
+        holder.getTxtDateFrom().setText(trip.getFromDate());
+        holder.getTxtDateTo().setText(trip.getToDate());
         holder.getTxtId().setText(trip.getId().toString());
 
     }
