@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txtTripName"
+                android:id="@+id/txtLayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -36,7 +36,7 @@
                 android:id="@+id/txtDateFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTripName"
+                android:layout_below="@+id/txtLayerName"
                 android:layout_centerHorizontal="true"
                 android:text="Date From"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -69,6 +69,14 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 />
+
+            <Button
+                android:id="@+id/btnMoreOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/txtId"
+                android:text="Button" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -18,7 +18,7 @@ public class ItemTripViewHolder extends RecyclerView.ViewHolder {
 
     public ItemTripViewHolder(View itemView) {
         super(itemView);
-        txtTripName = (TextView) itemView.findViewById(R.id.txtTripName);
+        txtTripName = (TextView) itemView.findViewById(R.id.txtLayerName);
         txtDateTo = (TextView) itemView.findViewById(R.id.txtDateTo);
         txtId = (TextView) itemView.findViewById(R.id.txtId);
         txtDateFrom = (TextView) itemView.findViewById(R.id.txtDateFrom);

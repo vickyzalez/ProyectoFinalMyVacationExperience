@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.activities.trip_list_activity.TripListControl;
 import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
 
@@ -36,14 +37,16 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
     private Button btnTripCancel;
     private Button btnTripOk;
     private static Activity activity;
+    private static TripListControl control;
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    public static NewTripDialogFragment newInstance(Activity act) {
+    public static NewTripDialogFragment newInstance(Activity act, TripListControl tripListControl) {
         NewTripDialogFragment f = new NewTripDialogFragment();
         activity = act;
+        control = tripListControl;
 
         return f;
     }
@@ -136,6 +139,9 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                //Actualiza activity
+                control.updateList(trip, null);
 
                 //TODO llamar al nuevo activity (el de listado de layers)
 

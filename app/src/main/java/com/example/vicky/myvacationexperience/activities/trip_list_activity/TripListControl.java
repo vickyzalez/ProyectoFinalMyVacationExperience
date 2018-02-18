@@ -36,7 +36,7 @@ public class TripListControl implements View.OnClickListener{
 
     }
 
-    private void loadList() throws IOException, JSONException {
+    public void loadList() throws IOException, JSONException {
 
 
         List<Trip> tripsMobile = new ArrayList<Trip>();
@@ -50,16 +50,19 @@ public class TripListControl implements View.OnClickListener{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        /*
-        trips.add(new Trip(1,"Nueva York", "20/10/2017", "30/10/2018",null));
-        trips.add(new Trip(2,"Miami", "20/10/2017", "30/10/2018",null));
-        trips.add(new Trip(3,"Los Angeles", "20/10/2017", "30/10/2018",null));
-        trips.add(new Trip(4,"Londres", "20/10/2017", "30/10/2018", null));
-        trips.add(new Trip(5,"Tu vieja", "20/10/2017", "30/10/2018",null));
-        */
-
-
+    public void updateList(Trip trip, Integer position){
+        if(position == null){
+            this.model.getTrips().add(trip);
+            this.view.notifyItemInserted(this.model.getTrips().size()-1);
+        } else if (trip == null) {
+            this.model.getTrips().remove(position.intValue());
+            this.view.notifyItemRemoved(position);
+        } else {
+            this.model.getTrips().set(position, trip);
+            this.view.notifyItemChanged(position);
+        }
     }
 
     public void setView(TripListView view) {
@@ -86,7 +89,7 @@ public class TripListControl implements View.OnClickListener{
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment newFragment = NewTripDialogFragment.newInstance(this.activity);
+                DialogFragment newFragment = NewTripDialogFragment.newInstance(this.activity, this);
                 newFragment.show(ft, "prueba");
                 break;
             default:

@@ -44,6 +44,14 @@ public class FileHandler {
         return text;
     }
 
+    private static Boolean deleteFile(Context context, Integer idTrip)throws IOException {
+
+        File directory = context.getFilesDir();
+        File f=new File(directory, String.valueOf(idTrip));
+        return f.delete();
+
+    }
+
 
     //lee todos los archivos y devuelve los Jsons en formato String
     private static List<String> readFiles(Context context)throws IOException {
@@ -212,6 +220,11 @@ public class FileHandler {
         writeFile(String.valueOf(trip.getId()), json.toString(), context);
 
 
+    }
+
+    public Boolean deleteTrip(Integer idTrip, Context context) throws IOException {
+
+        return deleteFile(context, idTrip);
     }
 
 }
