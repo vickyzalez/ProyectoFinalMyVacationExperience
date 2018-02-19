@@ -18,6 +18,7 @@ public class TripActivity extends AppCompatActivity {
         TripControl control = new TripControl(this,model);
         TripView view = new TripView(control, this);
         control.setView(view);
+        control.loadList();
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(model.getTrip().getName());

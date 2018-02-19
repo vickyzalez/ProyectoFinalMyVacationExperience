@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.entities.LayerTrip;
@@ -23,6 +24,7 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
         private RecyclerView recyclerView;
         private Button btnMoreOptions2;
         private TripControl ctrl;
+        private TextView message;
 
         public TripView(TripControl ctrl,Activity activity) {
             //boton nuevo trip
@@ -33,6 +35,8 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             LinearLayoutManager layoutManager = new LinearLayoutManager(activity); //manejador de lista
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(this);
+
+            this.message = (TextView) activity.findViewById(R.id.txtNoLayerMessage);
 
             this.ctrl = ctrl;
 
@@ -65,5 +69,13 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             return this.ctrl.getLayers().size();
         }
 
+
+        public void showMessage(){
+            this.message.setVisibility(View.VISIBLE);
+        }
+
+        public void hideMessage(){
+            this.message.setVisibility(View.GONE);
+        }
 
     }

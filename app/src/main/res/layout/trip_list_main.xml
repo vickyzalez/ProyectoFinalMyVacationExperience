@@ -12,6 +12,16 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
+    <TextView
+        android:id="@+id/txtNoTripMessage"
+        android:text="@string/noTripMessage"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:padding="25dp"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addTrip"
         android:layout_width="wrap_content"

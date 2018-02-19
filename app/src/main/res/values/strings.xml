@@ -9,4 +9,6 @@
     <string name="pathFileTrip">trips.txt</string>
     <string name="txtEdit">Editar</string>
     <string name="txtDelete">Eliminar</string>
+    <string name="noTripMessage">Todavía no cargaste ningún viaje. Para hacerlo, hacé click en el icono de \"+\"</string>
+    <string name="noLayerMessage">Todavía no creaste ninguna capa para tu viaje. Para hacerlo, hacé click en el icono de \"+\"</string>
 </resources>

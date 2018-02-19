@@ -26,7 +26,7 @@ public class TripControl implements View.OnClickListener{
     public TripControl(TripActivity activity, TripModel model)  {
         this.activity = activity;
         this.model = model;
-        loadList();
+
 
     }
 
@@ -37,15 +37,34 @@ public class TripControl implements View.OnClickListener{
     public void loadList(){
 
         Trip trip = (Trip) activity.getIntent().getSerializableExtra("Trip");
-
-        //TODO sacar
-        LayerTrip layer = new LayerTrip("Shopping", R.drawable.ic_more_vert_black_24dp, true);
-        trip.getLayers().add(layer);
         model.setTrip(trip);
+
+        if (trip.getLayers().isEmpty()){
+            view.showMessage();
+        }
     }
 
     public List<LayerTrip> getLayers() {
         return model.getTrip().getLayers();
+    }
+
+    public void updateList(LayerTrip layerTrip, Integer position){
+        if(position == null){
+            view.hideMessage();
+            this.model.getTrip().getLayers().add(layerTrip);
+            this.view.notifyItemInserted(this.model.getTrip().getLayers().size()-1);
+        } else if (layerTrip == null) {
+            this.model.getTrip().getLayers().remove(position.intValue());
+            this.view.notifyItemRemoved(position);
+
+            if (model.getTrip().getLayers().isEmpty()){
+                view.showMessage();
+            }
+
+        } else {
+            this.model.getTrip().getLayers().set(position, layerTrip);
+            this.view.notifyItemChanged(position);
+        }
     }
 
     @Override

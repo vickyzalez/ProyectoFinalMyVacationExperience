@@ -28,17 +28,17 @@ public class TripListActivity extends AppCompatActivity {
         bar.setTitle("My Vacation Experience");
 
         TripListModel model = new TripListModel();
-        TripListControl ctrl = null;
+        TripListControl ctrl = new TripListControl(this, model);
+        TripListView view = new TripListView(ctrl, this);
+
+        ctrl.setView(view); //se le inserta la view porque no se instancia en el mismo momento
         try {
-            ctrl = new TripListControl(this, model);
+            ctrl.loadList();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        TripListView view = new TripListView(ctrl, this);
-
-        ctrl.setView(view); //se le inserta la view porque no se instancia en el mismo momento
 
 
     }
