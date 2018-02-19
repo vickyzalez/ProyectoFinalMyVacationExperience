@@ -1,10 +1,12 @@
 package com.example.vicky.myvacationexperience.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Vicky on 10/2/2018.
  */
 
-public class Place {
+public class Place implements Serializable{
     private long id;
     private String name;
     private String description;

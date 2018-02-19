@@ -2,6 +2,7 @@ package com.example.vicky.myvacationexperience.dialogs;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.activities.trip_activity.TripActivity;
 import com.example.vicky.myvacationexperience.activities.trip_list_activity.TripListControl;
 import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
@@ -143,7 +145,10 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
                 //Actualiza activity
                 control.updateList(trip, null);
 
-                //TODO llamar al nuevo activity (el de listado de layers)
+                //Vas a la otra activity pasando el trip
+                Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
+                intent.putExtra("Trip", trip);
+                activity.startActivity(intent);
 
                 this.dismiss();
                 break;

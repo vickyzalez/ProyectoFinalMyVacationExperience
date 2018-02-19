@@ -99,7 +99,7 @@ public class FileHandler {
             JSONObject layerJson = arrayJsonLayer.getJSONObject(i);
 
             layer.setName(layerJson.getString("nameLayer"));
-            layer.setIcon(layerJson.getString("icon"));
+            layer.setIcon(layerJson.getInt("icon"));
             layer.setVisible(layerJson.getBoolean("visible"));
 
             JSONArray arrayJsonPlace = object.getJSONArray("places");

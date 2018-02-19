@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.vicky.myvacationexperience.R;
-import com.example.vicky.myvacationexperience.activities.trip_list_activity.viewholders.ItemTripViewHolder;
+import com.example.vicky.myvacationexperience.viewholders.ItemTripViewHolder;
 import com.example.vicky.myvacationexperience.dialogs.NewTripDialogFragment;
 import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
@@ -16,7 +16,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -92,11 +91,18 @@ public class TripListControl implements View.OnClickListener{
                 DialogFragment newFragment = NewTripDialogFragment.newInstance(this.activity, this);
                 newFragment.show(ft, "prueba");
                 break;
+
+            case R.id.btnMoreOptions:
+                //se fija por las opciones del trip (editar/borrar)
+                //TODO llamar a las opciones de menu
+                break;
+
             default:
                 //Ir a la pantalla del trip seleccionado
                 //TODO ir a la pantalla del trip
                 ItemTripViewHolder item = new ItemTripViewHolder(v);
                 Log.d(item.getTxtId().getText().toString(), item.getTxtTripName().getText().toString());
+                break;
         }
 
     }

@@ -1,5 +1,6 @@
 package com.example.vicky.myvacationexperience.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +8,9 @@ import java.util.List;
  * Created by Vicky on 10/2/2018.
  */
 
-public class LayerTrip {
+public class LayerTrip implements Serializable{
     private String name;
-    private String icon;
+    private Integer icon;
     private List<Place> places;
     private Boolean visible;
 
@@ -17,7 +18,7 @@ public class LayerTrip {
 
     }
 
-    public LayerTrip(String name, String icon, Boolean visible) {
+    public LayerTrip(String name, Integer icon, Boolean visible) {
         this.name = name;
         this.icon = icon;
         this.places = new ArrayList<Place>();
@@ -32,11 +33,11 @@ public class LayerTrip {
         this.name = name;
     }
 
-    public String getIcon() {
+    public Integer getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
+    public void setIcon(Integer icon) {
         this.icon = icon;
     }
 

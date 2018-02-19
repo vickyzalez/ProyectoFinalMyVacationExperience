@@ -1,7 +1,9 @@
-package com.example.vicky.myvacationexperience.activities.trip_list_activity.viewholders;
+package com.example.vicky.myvacationexperience.viewholders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
@@ -15,9 +17,12 @@ public class ItemTripViewHolder extends RecyclerView.ViewHolder {
     private TextView txtDateTo;
     private TextView txtDateFrom;
     private TextView txtId;
+    private ImageButton btnMoreOptions;
 
     public ItemTripViewHolder(View itemView) {
         super(itemView);
+
+        btnMoreOptions = (ImageButton) itemView.findViewById(R.id.btnMoreOptions);
         txtTripName = (TextView) itemView.findViewById(R.id.txtLayerName);
         txtDateTo = (TextView) itemView.findViewById(R.id.txtDateTo);
         txtId = (TextView) itemView.findViewById(R.id.txtId);
@@ -54,5 +59,13 @@ public class ItemTripViewHolder extends RecyclerView.ViewHolder {
 
     public void setTxtDateFrom(TextView txtDateFrom) {
         this.txtDateFrom = txtDateFrom;
+    }
+
+    public ImageButton getBtnMoreOptions() {
+        return btnMoreOptions;
+    }
+
+    public void setBtnMoreOptions(ImageButton btnMoreOptions) {
+        this.btnMoreOptions = btnMoreOptions;
     }
 }

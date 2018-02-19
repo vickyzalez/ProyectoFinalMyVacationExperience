@@ -1,5 +1,6 @@
 package com.example.vicky.myvacationexperience.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * Created by Vicky on 10/2/2018.
  */
 
-public class Trip {
+public class Trip implements Serializable {
 
     private Integer id;
     private String name;

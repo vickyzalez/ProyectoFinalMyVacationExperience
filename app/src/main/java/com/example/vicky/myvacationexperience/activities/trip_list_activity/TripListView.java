@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.vicky.myvacationexperience.R;
-import com.example.vicky.myvacationexperience.activities.trip_list_activity.viewholders.ItemTripViewHolder;
+import com.example.vicky.myvacationexperience.viewholders.ItemTripViewHolder;
 import com.example.vicky.myvacationexperience.entities.Trip;
 
 /**
@@ -35,7 +35,6 @@ public class TripListView extends RecyclerView.Adapter<ItemTripViewHolder> {
 
         this.ctrl = ctrl;
 
-
     }
 
     @Override
@@ -45,6 +44,7 @@ public class TripListView extends RecyclerView.Adapter<ItemTripViewHolder> {
         v.setOnClickListener(ctrl);
 
         ItemTripViewHolder itemTripViewHolder = new ItemTripViewHolder(v);
+        itemTripViewHolder.getBtnMoreOptions().setOnClickListener(ctrl);
         return itemTripViewHolder;
     }
 
