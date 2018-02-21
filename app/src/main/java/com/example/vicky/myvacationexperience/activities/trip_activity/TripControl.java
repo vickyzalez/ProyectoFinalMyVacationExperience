@@ -1,8 +1,13 @@
 package com.example.vicky.myvacationexperience.activities.trip_activity;
 
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.dialogs.NewLayerDialogFragment;
 import com.example.vicky.myvacationexperience.entities.LayerTrip;
 import com.example.vicky.myvacationexperience.entities.Trip;
 
@@ -38,6 +43,7 @@ public class TripControl implements View.OnClickListener{
 
         Trip trip = (Trip) activity.getIntent().getSerializableExtra("Trip");
         model.setTrip(trip);
+        Log.d("tripLayer", trip.getName()+" - "+trip.getLayers().toString());
 
         if (trip.getLayers().isEmpty()){
             view.showMessage();
@@ -45,24 +51,27 @@ public class TripControl implements View.OnClickListener{
     }
 
     public List<LayerTrip> getLayers() {
-        return model.getTrip().getLayers();
+        return getTrip().getLayers();
+    }
+
+    public Trip getTrip(){
+        return model.getTrip();
     }
 
     public void updateList(LayerTrip layerTrip, Integer position){
         if(position == null){
             view.hideMessage();
-            this.model.getTrip().getLayers().add(layerTrip);
-            this.view.notifyItemInserted(this.model.getTrip().getLayers().size()-1);
+            this.view.notifyItemInserted(this.getLayers().size()-1);
         } else if (layerTrip == null) {
-            this.model.getTrip().getLayers().remove(position.intValue());
+            this.getLayers().remove(position.intValue());
             this.view.notifyItemRemoved(position);
 
-            if (model.getTrip().getLayers().isEmpty()){
+            if (getLayers().isEmpty()){
                 view.showMessage();
             }
 
         } else {
-            this.model.getTrip().getLayers().set(position, layerTrip);
+            this.getLayers().set(position, layerTrip);
             this.view.notifyItemChanged(position);
         }
     }
@@ -71,9 +80,20 @@ public class TripControl implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.addLayer:
-                //TODO llamar a una nueva activity de creacion de layer
+                //Para poder mostrar el popup
+                // DialogFragment.show() will take care of adding the fragment
+                // in a transaction.  We also want to remove any currently showing
+                // dialog, so make our own transaction and take care of that here.
+                FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+                Fragment prev = activity.getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
 
-
+                // Create and show the dialog.
+                DialogFragment newFragment = NewLayerDialogFragment.newInstance(this.activity, this);
+                newFragment.show(ft, "prueba");
                 break;
 
             case R.id.btnMoreOptions:

@@ -62,7 +62,7 @@ public class FileHandler {
         for (File file: files){
 
             jsons.add(readFile(context, Integer.parseInt(file.getName())));
-
+            Log.d("director", readFile(context, Integer.parseInt(file.getName())));
         }
 
         return jsons;
@@ -76,6 +76,7 @@ public class FileHandler {
         FileWriter fw=new FileWriter(f);
         BufferedWriter bw=new BufferedWriter(fw);
         bw.write(text);
+        Log.d("JSONRECACA", text);
         bw.flush();
         bw.close();
     }
@@ -102,27 +103,31 @@ public class FileHandler {
             layer.setIcon(layerJson.getInt("icon"));
             layer.setVisible(layerJson.getBoolean("visible"));
 
-            JSONArray arrayJsonPlace = object.getJSONArray("places");
+            JSONArray arrayJsonPlace = layerJson.getJSONArray("places");
+            Log.d("LUL", layerJson.toString());
 
             List<Place> places = new ArrayList<>();
             for(int j=0;j<arrayJsonPlace.length();j++) {
 
                 Place place = new Place();
 
-                JSONObject placeJson = arrayJsonLayer.getJSONObject(j);
+                JSONObject placeJson = arrayJsonPlace.getJSONObject(j);
 
                 place.setId(placeJson.getInt("idPlace"));
                 place.setName(placeJson.getString("namePlace"));
                 place.setDescription(placeJson.getString("description"));
                 place.setLatitude(placeJson.getDouble("latitude"));
                 place.setLongitude(placeJson.getDouble("longitude"));
+                places.add(place);
 
 
             }
             layer.setPlaces(places);
+            layers.add(layer);
         }
 
         trip.setLayers(layers);
+        Log.d("LOL", trip.getName()+" - "+trip.getLayers().toString());
 
         return trip;
     }
@@ -194,8 +199,8 @@ public class FileHandler {
         for(LayerTrip layer: trip.getLayers()) {
 
             JSONArray places = new JSONArray();
-
             JSONObject jsonLayer = new JSONObject();
+
             jsonLayer.put("nameLayer", layer.getName());
             jsonLayer.put("icon", layer.getIcon());
             jsonLayer.put("visible", layer.getVisible());
@@ -213,16 +218,17 @@ public class FileHandler {
 
             }
 
+            jsonLayer.put("places", places);
             layers.put(jsonLayer);
         }
         json.put("layers", layers);
-
+        Log.d("JSONCACA", json.toString());
         writeFile(String.valueOf(trip.getId()), json.toString(), context);
 
 
     }
 
-    public Boolean deleteTrip(Integer idTrip, Context context) throws IOException {
+    public static Boolean deleteTrip(Integer idTrip, Context context) throws IOException {
 
         return deleteFile(context, idTrip);
     }

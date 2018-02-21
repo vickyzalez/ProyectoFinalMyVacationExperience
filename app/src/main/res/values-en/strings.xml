@@ -11,4 +11,7 @@
     <string name="txtDelete">Delete</string>
     <string name="noTripMessage">You have not created any trip yet. To do so, click in the \\\"+\\\" icon</string>
     <string name="noLayerMessage">You have not created any layer for your trip yet. To do so, click in the \\\"+\\\" icon</string>
+    <string name="addNewLayer">ADD NEW LAYER</string>
+    <string name="newlayername">Layer name</string>
+    <string name="txtSelectIcon">Select an Icon</string>
 </resources>

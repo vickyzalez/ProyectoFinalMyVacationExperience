@@ -43,6 +43,7 @@ public class TripListControl implements View.OnClickListener{
         List<Trip> tripsMobile = new ArrayList<Trip>();
 
         tripsMobile = FileHandler.getTripsToView(this.activity);
+        Log.d("TripsMobile", tripsMobile.get(tripsMobile.size()-1).getLayers().toString());
         model.setTrips(tripsMobile);
 
         if (tripsMobile.isEmpty()){
@@ -50,22 +51,31 @@ public class TripListControl implements View.OnClickListener{
         }
     }
 
-    public void updateList(Trip trip, Integer position){
-        if(position == null){
+    public void updateList(Trip trip, Integer id){
+        List<Trip> trips = this.model.getTrips();
+        if(id == null){
             view.hideMessage();
-            this.model.getTrips().add(trip);
-            this.view.notifyItemInserted(this.model.getTrips().size()-1);
-        } else if (trip == null) {
-            this.model.getTrips().remove(position.intValue());
-            this.view.notifyItemRemoved(position);
-
-            if (model.getTrips().isEmpty()){
-                view.showMessage();
+            trips.add(trip);
+            this.view.notifyItemInserted(trips.size()-1);
+        }
+        else {
+            for(int i=0;i<trips.size();i++){
+                if(id.intValue() == trips.get(i).getId().intValue()){
+                    if(trip == null){
+                        trips.remove(i);
+                        this.view.notifyItemRemoved(i);
+                        if (trips.isEmpty()){
+                            view.showMessage();
+                        }
+                    }
+                    else{
+                        Log.d("LEL", trip.getName()+" - "+trip.getLayers().toString());
+                        this.getTrips().set(i, trip);
+                        this.view.notifyItemChanged(i);
+                    }
+                    break;
+                }
             }
-
-        } else {
-            this.model.getTrips().set(position, trip);
-            this.view.notifyItemChanged(position);
         }
     }
 
@@ -113,7 +123,7 @@ public class TripListControl implements View.OnClickListener{
 
                 //buscar el trip en el listado
                 for (Trip currentTrip: this.model.getTrips()){
-                    if (currentTrip.getId() == idTrip){
+                    if (currentTrip.getId().intValue() == idTrip.intValue()){
                         trip = currentTrip;
                         break;
                     }
@@ -121,7 +131,7 @@ public class TripListControl implements View.OnClickListener{
 
                 Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
                 intent.putExtra("Trip", trip);
-                activity.startActivity(intent);
+                activity.startActivityForResult(intent, 1);
 
                 break;
         }

@@ -13,7 +13,8 @@
         android:inputType="textPersonName"
         android:hint="@string/newtripname"
         tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="81dp" />
+        tools:layout_editor_absoluteY="81dp"
+        android:gravity="center_horizontal"/>
 
     <EditText
         android:id="@+id/editFromTrip"
@@ -23,6 +24,7 @@
         android:layout_below="@+id/editNameTrip"
         android:layout_marginTop="18dp"
         android:clickable="true"
+        android:gravity="center_horizontal"
         android:ems="10"
         android:focusable="false"
         android:hint="@string/newtripfrom"
@@ -38,6 +40,7 @@
         android:layout_below="@+id/editFromTrip"
         android:layout_marginTop="16dp"
         android:clickable="true"
+        android:gravity="center_horizontal"
         android:ems="10"
         android:focusable="false"
         android:hint="@string/newtripto"

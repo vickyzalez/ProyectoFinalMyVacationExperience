@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/viewIdRelative">
+
+    <EditText
+        android:id="@+id/editNameLayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/newlayername"
+        android:gravity="center_horizontal"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="81dp"/>
+
+    <TextView
+        android:id="@+id/txtIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnNewLayerOk"
+        android:layout_below="@+id/editNameLayer"
+        android:ems="10"
+        android:hint="@string/txtSelectIcon"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="81dp" />
+
+    <ImageButton
+        android:id="@+id/iconShopping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtIcon"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/shopping" />
+
+    <ImageButton
+        android:id="@+id/iconRestaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnNewLayerCancel"
+        android:layout_alignTop="@+id/iconShopping"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:gravity="center_horizontal"
+        android:src="@drawable/restaurant" />
+
+    <ImageButton
+        android:id="@+id/iconIceCream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btnNewLayerOk"
+        android:layout_alignTop="@+id/iconRestaurant"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/icecream" />
+
+    <ImageButton
+        android:id="@+id/iconBakery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txtIcon"
+        android:layout_alignTop="@+id/iconIceCream"
+        android:layout_marginEnd="15dp"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/bakery" />
+
+    <ImageButton
+        android:id="@+id/iconTransit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iconShopping"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/transit" />
+
+    <ImageButton
+        android:id="@+id/iconMarket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconRestaurant"
+        android:layout_alignTop="@+id/iconFun"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/market" />
+
+    <ImageButton
+        android:id="@+id/iconFun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconIceCream"
+        android:layout_alignTop="@+id/iconFastFood"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/fun" />
+
+    <ImageButton
+        android:id="@+id/iconFastFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconBakery"
+        android:layout_alignTop="@+id/iconTransit"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/fastfood" />
+
+    <ImageButton
+        android:id="@+id/iconBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iconTransit"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/building" />
+
+    <ImageButton
+        android:id="@+id/iconHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconMarket"
+        android:layout_alignTop="@+id/iconBuilding"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/home" />
+
+    <ImageButton
+        android:id="@+id/iconLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconFun"
+        android:layout_alignTop="@+id/iconMusic"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/location" />
+
+    <ImageButton
+        android:id="@+id/iconMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconFastFood"
+        android:layout_alignTop="@+id/iconBuilding"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/music" />
+
+    <ImageButton
+        android:id="@+id/iconStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconHome"
+        android:layout_alignTop="@+id/iconCamera"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/star" />
+
+    <ImageButton
+        android:id="@+id/iconCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iconHome"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/camera" />
+
+    <ImageButton
+        android:id="@+id/iconCoffee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconLocation"
+        android:layout_alignTop="@+id/iconBar"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/coffee" />
+
+    <ImageButton
+        android:id="@+id/iconBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iconMusic"
+        android:layout_alignTop="@+id/iconCamera"
+        android:background="@null"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:src="@drawable/bar" />
+
+    <Button
+        android:id="@+id/btnNewLayerCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iconShopping"
+        android:layout_marginTop="159dp"
+        android:text="@string/btnCancel" />
+
+    <Button
+        android:id="@+id/btnNewLayerOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnNewLayerCancel"
+        android:layout_alignBottom="@+id/btnNewLayerCancel"
+        android:layout_alignEnd="@+id/editNameLayer"
+        android:layout_marginEnd="13dp"
+        android:text="@string/btnOk" />
+</RelativeLayout>

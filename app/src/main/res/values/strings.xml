@@ -11,4 +11,7 @@
     <string name="txtDelete">Eliminar</string>
     <string name="noTripMessage">Todavía no cargaste ningún viaje. Para hacerlo, hacé click en el icono de \"+\"</string>
     <string name="noLayerMessage">Todavía no creaste ninguna capa para tu viaje. Para hacerlo, hacé click en el icono de \"+\"</string>
+    <string name="addNewLayer">AGREGAR NUEVA CAPA</string>
+    <string name="newlayername">Nombre de la capa</string>
+    <string name="txtSelectIcon">Seleccioná un Icono</string>
 </resources>

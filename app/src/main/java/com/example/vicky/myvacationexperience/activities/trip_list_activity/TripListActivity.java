@@ -1,22 +1,28 @@
 package com.example.vicky.myvacationexperience.activities.trip_list_activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.entities.Trip;
+import com.example.vicky.myvacationexperience.utilities.FileHandler;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 
 public class TripListActivity extends AppCompatActivity {
+
+    private TripListControl control;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,7 @@ public class TripListActivity extends AppCompatActivity {
 
         ActionBar bar = this.getSupportActionBar();
         bar.setTitle("My Vacation Experience");
+        bar.setDisplayHomeAsUpEnabled(true);
 
         TripListModel model = new TripListModel();
         TripListControl ctrl = new TripListControl(this, model);
@@ -39,7 +46,7 @@ public class TripListActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        control = ctrl;
 
     }
 
@@ -63,5 +70,14 @@ public class TripListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 1 && resultCode == 1){
+            super.onActivityResult(requestCode,resultCode,data);
+            Trip trip = (Trip) data.getSerializableExtra("Trip");
+            this.control.updateList(trip, trip.getId());
+        }
     }
 }
