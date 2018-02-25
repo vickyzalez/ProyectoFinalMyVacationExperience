@@ -148,7 +148,7 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
                 //Vas a la otra activity pasando el trip
                 Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
                 intent.putExtra("Trip", trip);
-                activity.startActivity(intent);
+                activity.startActivityForResult(intent, 1);
 
                 this.dismiss();
                 break;

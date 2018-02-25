@@ -1,11 +1,17 @@
 package com.example.vicky.myvacationexperience.activities.trip_list_activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.media.Image;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.activities.trip_activity.TripActivity;
@@ -108,26 +114,41 @@ public class TripListControl implements View.OnClickListener{
                 break;
 
             case R.id.btnMoreOptions:
-                //se fija por las opciones del trip (editar/borrar)
-                //TODO llamar a las opciones de menu
+                final Activity act = this.activity;
+                final View view = v;
+
+                PopupMenu popup = new PopupMenu(act, v);
+                popup.getMenuInflater().inflate(R.menu.menu_option, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        if (item.getItemId() == R.id.menu_delete){
+                            Trip trip = getSelectedTrip((View)view.getParent());
+                            //TODO llamar al popup para confirmar "esta seguro?"
+                            try {
+                                FileHandler.deleteTrip(trip.getId(),act);
+                                updateList(null, trip.getId());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        } else {
+                            //TODO editar
+
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show();
+
                 break;
 
             default:
-                //Ir a la pantalla del trip seleccionado
-                //TODO ir a la pantalla del trip
-                ItemTripViewHolder item = new ItemTripViewHolder(v);
-                Log.d(item.getTxtId().getText().toString(), item.getTxtTripName().getText().toString());
 
-                Integer idTrip = Integer.valueOf(item.getTxtId().getText().toString());
-                Trip trip = new Trip();
-
-                //buscar el trip en el listado
-                for (Trip currentTrip: this.model.getTrips()){
-                    if (currentTrip.getId().intValue() == idTrip.intValue()){
-                        trip = currentTrip;
-                        break;
-                    }
-                }
+                Trip trip = this.getSelectedTrip(v);
 
                 Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
                 intent.putExtra("Trip", trip);
@@ -136,6 +157,23 @@ public class TripListControl implements View.OnClickListener{
                 break;
         }
 
+    }
+
+    private Trip getSelectedTrip(View v){
+        ItemTripViewHolder item = new ItemTripViewHolder(v);
+
+        Integer idTrip = Integer.valueOf(item.getTxtId().getText().toString());
+        Trip trip = new Trip();
+
+        //buscar el trip en el listado
+        for (Trip currentTrip: this.model.getTrips()){
+            if (currentTrip.getId().intValue() == idTrip.intValue()){
+                trip = currentTrip;
+                break;
+            }
+        }
+
+        return trip;
     }
 
 

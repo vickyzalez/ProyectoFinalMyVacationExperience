@@ -2,14 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- "Mark Favorite", should appear as action button if possible -->
     <item
-        android:id="@+id/action_favorite"
+        android:id="@+id/menu_edit"
         android:title="@string/txtEdit"
         app:showAsAction="never"/>
 
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
+
+    <item android:id="@+id/menu_delete"
         android:title="@string/txtDelete"
         app:showAsAction="never"/>
 
