@@ -40,15 +40,16 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
     private Button btnTripOk;
     private static Activity activity;
     private static TripListControl control;
-
+    private static Trip tripModify;
     /**
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    public static NewTripDialogFragment newInstance(Activity act, TripListControl tripListControl) {
+    public static NewTripDialogFragment newInstance(Activity act, TripListControl tripListControl,Trip trip) {
         NewTripDialogFragment f = new NewTripDialogFragment();
         activity = act;
         control = tripListControl;
+        tripModify = trip;
 
         return f;
     }
@@ -75,19 +76,12 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
         this.btnTripOk.setOnClickListener(this);
         this.btnTripCancel.setOnClickListener(this);
 
-        /* View tv = v.findViewById(R.id.text);
-        ((TextView)tv).setText("Dialog #" + mNum + ": using style " + getNameForNum(mNum));
+        if (tripModify != null){
+            this.tripName.setText(tripModify.getName());
+            this.tripFrom.setText(tripModify.getFromDate());
+            this.tripTo.setText(tripModify.getToDate());
+        }
 
-        // Watch for button clicks.
-        Button button = (Button)v.findViewById(R.id.show);
-        button.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                // When button is clicked, call up to owning activity.
-                ((FragmentDialog)getActivity()).showDialog();
-            }
-        });
-
-        */
         return v;
     }
 
@@ -117,38 +111,58 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
 
             case R.id.btnNewTripOk:
 
-                //buscamos el id que tendra el nuevo Trip
-                    Integer idTrip = 0;
-                try {
-                    idTrip = FileHandler.getIdNextTrip(activity);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (tripModify == null){
+                    //buscamos el id que tendra el nuevo Trip
+                        Integer idTrip = 0;
+                    try {
+                        idTrip = FileHandler.getIdNextTrip(activity);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //creamos el objeto
+                    Trip trip = new Trip(idTrip,
+                            this.tripName.getText().toString(),
+                            this.tripFrom.getText().toString(),
+                            this.tripTo.getText().toString(), "");
+
+                    //TODO implementar el llamado a la API que devuelva la fotito
+
+                    //se guarda en el celu
+                    try {
+                        FileHandler.saveTrip(trip, activity);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Actualiza activity
+                    control.updateList(trip, null);
+
+                    //Vas a la otra activity pasando el trip
+                    Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
+                    intent.putExtra("Trip", trip);
+                    activity.startActivityForResult(intent, 1);
+
+                } else {
+
+                    tripModify.setName(this.tripName.getText().toString());
+                    tripModify.setFromDate(this.tripFrom.getText().toString());
+                    tripModify.setToDate(this.tripTo.getText().toString());
+
+                    //se guarda en el celu
+                    try {
+                        FileHandler.saveTrip(tripModify, activity);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Actualiza activity
+                    control.updateList(tripModify, tripModify.getId());
                 }
-
-                //creamos el objeto
-                Trip trip = new Trip(idTrip,
-                        this.tripName.getText().toString(),
-                        this.tripFrom.getText().toString(),
-                        this.tripTo.getText().toString(), "");
-
-                //TODO implementar el llamado a la API que devuelva la fotito
-
-                //se guarda en el celu
-                try {
-                    FileHandler.saveTrip(trip, activity);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                //Actualiza activity
-                control.updateList(trip, null);
-
-                //Vas a la otra activity pasando el trip
-                Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
-                intent.putExtra("Trip", trip);
-                activity.startActivityForResult(intent, 1);
 
                 this.dismiss();
                 break;

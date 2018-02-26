@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuItem;
@@ -36,6 +38,7 @@ public class TripListControl implements View.OnClickListener{
     private TripListActivity activity;
     private TripListView view;
     private TripListModel model;
+    private Trip tripView; //para ver cual seleccionó
 
     public TripListControl(TripListActivity activity, TripListModel model){
         this.activity = activity;
@@ -109,33 +112,58 @@ public class TripListControl implements View.OnClickListener{
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment newFragment = NewTripDialogFragment.newInstance(this.activity, this);
+                DialogFragment newFragment = NewTripDialogFragment.newInstance(this.activity, this, null);
                 newFragment.show(ft, "prueba");
                 break;
 
             case R.id.btnMoreOptions:
                 final Activity act = this.activity;
                 final View view = v;
+                final TripListControl ctrl = this;
 
                 PopupMenu popup = new PopupMenu(act, v);
                 popup.getMenuInflater().inflate(R.menu.menu_option, popup.getMenu());
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
+                        tripView = getSelectedTrip((View)view.getParent());
 
                         if (item.getItemId() == R.id.menu_delete){
-                            Trip trip = getSelectedTrip((View)view.getParent());
-                            //TODO llamar al popup para confirmar "esta seguro?"
-                            try {
-                                FileHandler.deleteTrip(trip.getId(),act);
-                                updateList(null, trip.getId());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+
+                            //mensaje de alerta
+                            new AlertDialog.Builder(act)
+                                    .setTitle(R.string.popupConfirmTitle)
+                                    .setMessage(R.string.popupConfirm)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            //por si quiero mostrar
+                                            // Toast.makeText(act, R.string.btnOk, Toast.LENGTH_SHORT).show();
+
+                                            try {
+                                                FileHandler.deleteTrip(tripView.getId(),act);
+                                                updateList(null, tripView.getId());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }})
+                                    .setNegativeButton(R.string.btnCancel, null).show();
+
 
 
                         } else {
-                            //TODO editar
+                            //es edit, llama de nuevo al Dialog
+                            FragmentTransaction ft = act.getFragmentManager().beginTransaction();
+                            Fragment prev = act.getFragmentManager().findFragmentByTag("dialog");
+                            if (prev != null) {
+                                ft.remove(prev);
+                            }
+                            ft.addToBackStack(null);
+
+                            // Create and show the dialog.
+                            DialogFragment newFragment = NewTripDialogFragment.newInstance(act, ctrl, tripView);
+                            newFragment.show(ft, "prueba");
 
                         }
                         return true;

@@ -9,9 +9,11 @@
     <string name="pathFileTrip">trips.txt</string>
     <string name="txtEdit">Editar</string>
     <string name="txtDelete">Eliminar</string>
-    <string name="noTripMessage">Todavía no cargaste ningún viaje. Para hacerlo, hacé click en el icono de \"+\"</string>
-    <string name="noLayerMessage">Todavía no creaste ninguna capa para tu viaje. Para hacerlo, hacé click en el icono de \"+\"</string>
+    <string name="noTripMessage">Todavía no cargaste ningún destino. Para hacerlo, hacé click en el icono de \"+\"</string>
+    <string name="noLayerMessage">Todavía no creaste ninguna categoría para tu viaje. Para hacerlo, hacé click en el icono de \"+\" y luego desde el mapa podrás cargar los lugares que desees</string>
     <string name="addNewLayer">AGREGAR NUEVA CAPA</string>
     <string name="newlayername">Nombre de la capa</string>
     <string name="txtSelectIcon">Seleccioná un Icono</string>
+    <string name="popupConfirm">Si eliminás el destino se borrarán todas las categorías y lugares que creaste</string>
+    <string name="popupConfirmTitle">¿Estás seguro?</string>
 </resources>
