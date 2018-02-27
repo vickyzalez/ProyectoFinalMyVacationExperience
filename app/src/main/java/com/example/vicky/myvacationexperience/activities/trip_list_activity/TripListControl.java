@@ -78,7 +78,6 @@ public class TripListControl implements View.OnClickListener{
                         }
                     }
                     else{
-                        Log.d("LEL", trip.getName()+" - "+trip.getLayers().toString());
                         this.getTrips().set(i, trip);
                         this.view.notifyItemChanged(i);
                     }

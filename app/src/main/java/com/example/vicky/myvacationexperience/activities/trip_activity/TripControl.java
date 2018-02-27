@@ -1,15 +1,23 @@
 package com.example.vicky.myvacationexperience.activities.trip_activity;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.dialogs.NewLayerDialogFragment;
 import com.example.vicky.myvacationexperience.entities.LayerTrip;
 import com.example.vicky.myvacationexperience.entities.Trip;
+import com.example.vicky.myvacationexperience.utilities.FileHandler;
+import com.example.vicky.myvacationexperience.viewholders.ItemLayerViewHolder;
 
 import org.json.JSONException;
 
@@ -26,6 +34,7 @@ public class TripControl implements View.OnClickListener{
     private TripActivity activity;
     private TripModel model;
     private TripView view;
+    private LayerTrip layerView; //para ver cual seleccionó
 
 
     public TripControl(TripActivity activity, TripModel model)  {
@@ -63,7 +72,6 @@ public class TripControl implements View.OnClickListener{
             view.hideMessage();
             this.view.notifyItemInserted(this.getLayers().size()-1);
         } else if (layerTrip == null) {
-            this.getLayers().remove(position.intValue());
             this.view.notifyItemRemoved(position);
 
             if (getLayers().isEmpty()){
@@ -92,22 +100,102 @@ public class TripControl implements View.OnClickListener{
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment newFragment = NewLayerDialogFragment.newInstance(this.activity, this);
+                DialogFragment newFragment = NewLayerDialogFragment.newInstance(this.activity, this, null, null, null);
                 newFragment.show(ft, "prueba");
                 break;
 
-            case R.id.btnMoreOptions:
+            case R.id.btnMoreOptions2:
                 //se fija por las opciones del trip (editar/borrar)
-                //TODO llamar a las opciones de menu
+                ItemLayerViewHolder viewHolder = new ItemLayerViewHolder((View)v.getParent());
+                final Integer positionLayerSelected = Integer.valueOf(viewHolder.getTxtPosition().getText().toString());
 
+                final Activity act = this.activity;
+                final View view = v;
+                final TripControl ctrl = this;
+                final Trip tripModified = model.getTrip();
+
+                PopupMenu popup = new PopupMenu(act, v);
+                popup.getMenuInflater().inflate(R.menu.menu_option, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        layerView = getSelectedLayer((View)view.getParent());
+
+
+
+                        if (item.getItemId() == R.id.menu_delete){
+
+                            //mensaje de alerta
+                            new AlertDialog.Builder(act)
+                                    .setTitle(R.string.popupConfirmTitle)
+                                    .setMessage(R.string.popupConfirmLayer)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            //lo elimina del trip actual
+                                            tripModified.getLayers().remove(layerView);
+
+                                            try {
+                                                FileHandler.saveTrip(tripModified, activity);
+                                                updateList(null, positionLayerSelected);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }})
+                                    .setNegativeButton(R.string.btnCancel, null).show();
+
+
+
+                        } else {
+                            //es edit, llama de nuevo al Dialog
+                            FragmentTransaction ft = act.getFragmentManager().beginTransaction();
+                            Fragment prev = act.getFragmentManager().findFragmentByTag("dialog");
+                            if (prev != null) {
+                                ft.remove(prev);
+                            }
+                            ft.addToBackStack(null);
+
+                            // Create and show the dialog.
+                            DialogFragment newFragment = NewLayerDialogFragment.newInstance(act, ctrl, layerView, model.getTrip(), positionLayerSelected);
+                            newFragment.show(ft, "prueba");
+
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show();
+
+
+                break;
                 //TODO falta el case para mostrar el mapa
                 //TODO falta el case para ir para atras
-                break;
 
             default:
-                //NADA?
+                //TODO mostrar el listado de los places de cada Capa
                 break;
         }
 
+    }
+
+    private LayerTrip getSelectedLayer(View v){
+        ItemLayerViewHolder item = new ItemLayerViewHolder(v);
+
+        String nameTrip = item.getTxtLayerName().getText().toString();
+        LayerTrip layer = new LayerTrip();
+
+        //buscar el trip en el listado
+        for (LayerTrip currentLayer: this.model.getTrip().getLayers()){
+            if (currentLayer.getName().toString().equals(nameTrip)){
+                layer = currentLayer;
+                break;
+            }
+        }
+
+        return layer;
     }
 }

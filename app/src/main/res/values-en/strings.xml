@@ -10,10 +10,11 @@
     <string name="pathFileTrip">trips.txt</string>
     <string name="txtDelete">Delete</string>
     <string name="noTripMessage">You have not created any trip yet. To do so, click in the \\\"+\\\" icon</string>
-    <string name="noLayerMessage">You have not created any layer for your trip yet. To do so, click in the \"+\" icon and then you can add places from the map</string>
-    <string name="addNewLayer">ADD NEW LAYER</string>
-    <string name="newlayername">Layer name</string>
+    <string name="noLayerMessage">You have not created any layer for your trip yet. You can easily divide your places. To do so, click in the \"+\" icon and then you can add places from the map</string>
+    <string name="addNewLayer">ADD NEW CATEGORY</string>
+    <string name="newlayername">Category name</string>
     <string name="txtSelectIcon">Select an Icon</string>
     <string name="popupConfirm">If you delete the trip, you will be deleting all the categories and places</string>
     <string name="popupConfirmTitle">Are you sure?</string>
+    <string name="popupConfirmLayer">If you delete the category you will remove all the places</string>
 </resources>

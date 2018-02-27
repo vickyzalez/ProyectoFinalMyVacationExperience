@@ -10,10 +10,12 @@
     <string name="txtEdit">Editar</string>
     <string name="txtDelete">Eliminar</string>
     <string name="noTripMessage">Todavía no cargaste ningún destino. Para hacerlo, hacé click en el icono de \"+\"</string>
-    <string name="noLayerMessage">Todavía no creaste ninguna categoría para tu viaje. Para hacerlo, hacé click en el icono de \"+\" y luego desde el mapa podrás cargar los lugares que desees</string>
-    <string name="addNewLayer">AGREGAR NUEVA CAPA</string>
-    <string name="newlayername">Nombre de la capa</string>
+    <string name="noLayerMessage">Todavía no creaste ninguna categoría para tu viaje. Podrás dividir tus lugares fácilmente. Para hacerlo, hacé click en el icono de \"+\" y luego desde el mapa podrás cargar los lugares que desees</string>
+    <string name="addNewLayer">AGREGAR NUEVA CATEGORIA</string>
+    <string name="newlayername">Nombre de la categoría</string>
     <string name="txtSelectIcon">Seleccioná un Icono</string>
     <string name="popupConfirm">Si eliminás el destino se borrarán todas las categorías y lugares que creaste</string>
     <string name="popupConfirmTitle">¿Estás seguro?</string>
+    <string name="popupConfirmLayer">Si eliminás la categoría se borrarán todos los lugares que cargaste</string>
+
 </resources>

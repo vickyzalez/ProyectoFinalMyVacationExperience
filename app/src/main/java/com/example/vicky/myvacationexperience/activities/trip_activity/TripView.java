@@ -22,7 +22,6 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
 
         private FloatingActionButton addLayer;
         private RecyclerView recyclerView;
-        private Button btnMoreOptions2;
         private TripControl ctrl;
         private TextView message;
 
@@ -61,6 +60,7 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             holder.getTxtLayerName().setText(layerTrip.getName());
             holder.getChkVisible().setChecked(layerTrip.getVisible());
             holder.getIconLayer().setImageResource(layerTrip.getIcon()); //se le pasa el R.drawable directamente al crearlo
+            holder.getTxtPosition().setText(String.valueOf(position));
             //TODO mapear el listado
 
         }

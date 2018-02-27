@@ -18,6 +18,7 @@ import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.activities.trip_activity.TripActivity;
 import com.example.vicky.myvacationexperience.activities.trip_activity.TripControl;
 import com.example.vicky.myvacationexperience.entities.LayerTrip;
+import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
 
 import org.json.JSONException;
@@ -40,16 +41,23 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
     private static Activity activity;
     private static TripControl control;
 
+    private static LayerTrip layerModify;
+    private static Trip tripModify;
+    private static Integer positionLayer;
+
     private RelativeLayout relative;
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    public static NewLayerDialogFragment newInstance(Activity act, TripControl tripControl) {
+    public static NewLayerDialogFragment newInstance(Activity act, TripControl tripControl, LayerTrip layer, Trip trip, Integer position) {
         NewLayerDialogFragment f = new NewLayerDialogFragment();
         activity = act;
         control = tripControl;
+        layerModify = layer;
+        tripModify = trip;
+        positionLayer = position;
 
         return f;
     }
@@ -78,6 +86,11 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
 
         this.btnLayerOk.setOnClickListener(this);
         this.btnLayerCancel.setOnClickListener(this);
+
+        if (layerModify != null){
+            this.layerName.setText(layerModify.getName());
+            this.icon = layerModify.getIcon();
+        }
 
         return v;
     }
@@ -194,33 +207,50 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
 
             case R.id.btnNewLayerOk:
 
-                LayerTrip layer = new LayerTrip(this.layerName.getText().toString(),this.icon,true);
-                control.getLayers().add(layer);
+                if (layerModify == null){
 
-                //se guarda en el celu
-                try {
-                    FileHandler.saveTrip(control.getTrip(), activity);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    LayerTrip layer = new LayerTrip(this.layerName.getText().toString(),this.icon,true);
+                    control.getLayers().add(layer);
+
+                    //se guarda en el celu
+                    try {
+                        FileHandler.saveTrip(control.getTrip(), activity);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+
                 }
 
                 //Actualiza activity
                 control.updateList(layer, null);
 
+                } else {
+
+                    layerModify.setName(this.layerName.getText().toString());
+                    layerModify.setIcon(this.icon);
+
+                    for (LayerTrip layerTrip: tripModify.getLayers()){
+                        if (layerTrip.getName().toString().equals(layerModify.getName().toString())){
+                            layerTrip = layerModify;
+                        }
+                    }
+                    //se guarda en el celu
+                    try {
+                        FileHandler.saveTrip(tripModify, activity);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Actualiza activity
+                    control.updateList(layerModify, positionLayer);
+
+            }
+
                 this.dismiss();
                 break;
-
-            /*default:
-                if(view instanceof ImageButton){
-                    changeBackground();
-                    view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
-                    this.icon = (R.drawable.transit);
-                    break;
-                }*/
-
-
         }
     }
 
