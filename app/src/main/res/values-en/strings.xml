@@ -17,4 +17,8 @@
     <string name="popupConfirm">If you delete the trip, you will be deleting all the categories and places</string>
     <string name="popupConfirmTitle">Are you sure?</string>
     <string name="popupConfirmLayer">If you delete the category you will remove all the places</string>
+    <string name="btnTxtGoogle">See my maps</string>
+    <string name="btnTxtWikitude">Sightseeing</string>
+    <string name="txtHomeQuiero" >I want...</string>
+    <string name="txtHome">Welcome Traveler! What do you want to do today?</string>
 </resources>
