@@ -24,6 +24,12 @@
         </activity>
         <activity android:name=".activities.trip_list_activity.TripListActivity"></activity>
         <activity android:name=".activities.trip_activity.TripActivity"></activity>
+        <activity android:name=".activities.place_activity.PlacesActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk"/>
+
     </application>
 
 </manifest>

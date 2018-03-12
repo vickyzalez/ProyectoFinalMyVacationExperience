@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.activities.place_activity.PlacesActivity;
+import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
 
 import java.io.IOException;
@@ -51,7 +53,10 @@ public class TripActivity extends AppCompatActivity {
                 return true;
 
             case R.id.actionMap:
-                //TODO llamar al nuevo action del Mapa
+
+                Intent intent = new Intent(this.getApplicationContext(), PlacesActivity.class);
+                intent.putExtra("Trip", this.ctrl.getTrip());
+                this.startActivityForResult(intent, 1);
                 return true;
 
             default:
@@ -71,4 +76,14 @@ public class TripActivity extends AppCompatActivity {
         intent.putExtra("Trip", ctrl.getTrip());
         this.setResult(1, intent);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 1 && resultCode == 1){
+            super.onActivityResult(requestCode,resultCode,data);
+            Trip trip = (Trip) data.getSerializableExtra("Trip");
+            this.ctrl.getTrip().setLayers(trip.getLayers()); //probar
+        }
+    }
+
 }

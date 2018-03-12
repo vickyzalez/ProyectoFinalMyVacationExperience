@@ -172,8 +172,6 @@ public class TripControl implements View.OnClickListener{
 
 
                 break;
-                //TODO falta el case para mostrar el mapa
-                //TODO falta el case para ir para atras
 
             default:
                 //TODO mostrar el listado de los places de cada Capa

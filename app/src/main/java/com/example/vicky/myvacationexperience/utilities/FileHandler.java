@@ -60,9 +60,12 @@ public class FileHandler {
         File directory = context.getFilesDir();
         File[] files = directory.listFiles();
         for (File file: files){
-
-            jsons.add(readFile(context, Integer.parseInt(file.getName())));
-            Log.d("director", readFile(context, Integer.parseInt(file.getName())));
+            try {
+                jsons.add(readFile(context, Integer.parseInt(file.getName())));
+                Log.d("director", readFile(context, Integer.parseInt(file.getName())));
+            } catch(NumberFormatException e) {
+                continue;
+            }
         }
 
         return jsons;
@@ -143,10 +146,17 @@ public class FileHandler {
         File directory = context.getFilesDir();
         File[] files = directory.listFiles();
         for (File file: files){
-            Integer currentId = Integer.parseInt(file.getName());
-            if (nextId < currentId){
-                nextId = currentId;
+            try {
+
+                Integer currentId = Integer.parseInt(file.getName());
+                if (nextId < currentId){
+                    nextId = currentId;
+                }
+
+            } catch(NumberFormatException e) {
+                continue;
             }
+
 
         }
 
