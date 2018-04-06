@@ -1,5 +1,6 @@
 package com.example.vicky.myvacationexperience.activities.place_activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.vicky.myvacationexperience.R;
 
@@ -19,16 +21,23 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class PlacesActivity extends AppCompatActivity implements OnConnectionFailedListener, OnMapReadyCallback {
+public class PlacesActivity extends AppCompatActivity implements OnConnectionFailedListener, OnMapReadyCallback{
 
     private GoogleApiClient mGoogleApiClient;
     private PlacesControl ctrl;
     private GoogleMap mMap;
     PlaceAutocompleteFragment placeAutoComplete;
+
+    final Activity currentActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +65,37 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
         placeAutoComplete = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete);
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+
             @Override
             public void onPlaceSelected(Place place) {
 
-                Log.d("Maps", "Place selected: " + place.getName());
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(place.getLatLng())      // Sets the center of the map to Mountain View
+                        .zoom(17)                   // Sets the zoom
+                        .build();                   // Creates a CameraPosition from the builder
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                //se marca el punto seleccionado en el mapa
+                Marker selectedMarker = mMap.addMarker(new MarkerOptions()
+                        .position(place.getLatLng())
+                        .title(place.getName().toString()));
+                selectedMarker.setTag(0);
+                selectedMarker.setSnippet("Population: 776733");
+                selectedMarker.showInfoWindow();
+
+                // Set a listener for marker click.
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+
+                            // Return false to indicate that we have not consumed the event and that we wish
+                            // for the default behavior to occur (which is for the camera to move such that the
+                            // marker is centered and for the marker's info window to open, if it has one).
+                            return false;
+                    }
+                });
+
+                Log.d("Maps", "Place selected: " + place.getName() + place.getId() + place.getAddress() + place.getRating() + place.getLatLng());
             }
 
             @Override
@@ -121,4 +157,5 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
     }
+
 }
