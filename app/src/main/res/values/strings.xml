@@ -21,6 +21,7 @@
     <string name="btnTxtWikitude">Recorrer</string>
     <string name="txtHomeQuiero">Quiero...</string>
     <string name="txtHome">Bienvenido Viajero! Qué te gustaría hacer hoy?</string>
+    <string name="txtExpandable">Ver todos los lugares</string>
     />
 
 </resources>

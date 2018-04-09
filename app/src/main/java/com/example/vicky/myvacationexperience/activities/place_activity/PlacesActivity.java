@@ -63,6 +63,8 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 .enableAutoManage(this, this)
                 .build();
 
+        //TODO ACA SE DEBERIAN CARGAR LOS PLACES DEL TRIP
+
         placeAutoComplete = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete);
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 

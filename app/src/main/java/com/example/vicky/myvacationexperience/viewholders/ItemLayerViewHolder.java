@@ -20,6 +20,7 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
     private CheckBox chkVisible;
     private ImageButton btnMoreOptions;
     private TextView txtPosition;
+    private TextView expandable;
     //TODO falta la lista de places
 
     public ItemLayerViewHolder(View itemView) {
@@ -30,6 +31,7 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
         chkVisible = (CheckBox) itemView.findViewById(R.id.chkVisible);
         iconLayer = (ImageView) itemView.findViewById(R.id.iconLayer);
         txtPosition = (TextView) itemView.findViewById(R.id.txtPosition);
+        expandable = (TextView) itemView.findViewById(R.id.txtExpandable);
     }
 
     public TextView getTxtLayerName() {
@@ -70,5 +72,13 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
 
     public void setTxtPosition(TextView txtPosition) {
         this.txtPosition = txtPosition;
+    }
+
+    public TextView getExpandable() {
+        return expandable;
+    }
+
+    public void setExpandable(TextView expandable) {
+        this.expandable = expandable;
     }
 }

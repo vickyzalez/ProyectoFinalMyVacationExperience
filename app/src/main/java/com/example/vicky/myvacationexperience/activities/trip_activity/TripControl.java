@@ -1,10 +1,12 @@
 package com.example.vicky.myvacationexperience.activities.trip_activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -52,7 +54,9 @@ public class TripControl implements View.OnClickListener{
 
         Trip trip = (Trip) activity.getIntent().getSerializableExtra("Trip");
         model.setTrip(trip);
+
         Log.d("tripLayer", trip.getName()+" - "+trip.getLayers().toString());
+
 
         if (trip.getLayers().isEmpty()){
             view.showMessage();

@@ -24,6 +24,8 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
         private RecyclerView recyclerView;
         private TripControl ctrl;
         private TextView message;
+        private TextView expandable;
+        private Activity activ;
 
         public TripView(TripControl ctrl,Activity activity) {
             //boton nuevo trip
@@ -38,6 +40,10 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             this.message = (TextView) activity.findViewById(R.id.txtNoLayerMessage);
 
             this.ctrl = ctrl;
+
+            this.expandable = expandable;
+
+            this.activ = activity;
 
 
         }
@@ -61,6 +67,8 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             holder.getChkVisible().setChecked(layerTrip.getVisible());
             holder.getIconLayer().setImageResource(layerTrip.getIcon()); //se le pasa el R.drawable directamente al crearlo
             holder.getTxtPosition().setText(String.valueOf(position));
+            holder.getExpandable().setText(activ.getResources().getString(R.string.txtExpandable) + " (" + layerTrip.getPlaces().size() + ")");
+            
             //TODO mapear el listado
 
         }
