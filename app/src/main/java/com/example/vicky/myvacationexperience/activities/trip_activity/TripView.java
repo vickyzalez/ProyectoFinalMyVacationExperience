@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.entities.LayerTrip;
+import com.example.vicky.myvacationexperience.entities.Place;
 import com.example.vicky.myvacationexperience.viewholders.ItemLayerViewHolder;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by Vicky on 18/2/2018.
@@ -24,7 +27,6 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
         private RecyclerView recyclerView;
         private TripControl ctrl;
         private TextView message;
-        private TextView expandable;
         private Activity activ;
 
         public TripView(TripControl ctrl,Activity activity) {
@@ -41,8 +43,6 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
 
             this.ctrl = ctrl;
 
-            this.expandable = expandable;
-
             this.activ = activity;
 
 
@@ -54,9 +54,11 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layer, parent, false);
             v.setOnClickListener(ctrl);
 
-            ItemLayerViewHolder ItemLayerViewHolder = new ItemLayerViewHolder(v);
-            ItemLayerViewHolder.getBtnMoreOptions().setOnClickListener(ctrl);
-            return ItemLayerViewHolder;
+            ItemLayerViewHolder itemLayerViewHolder = new ItemLayerViewHolder(v);
+            itemLayerViewHolder.getBtnMoreOptions().setOnClickListener(ctrl);
+            itemLayerViewHolder.getExpandable().setOnClickListener(ctrl);
+
+            return itemLayerViewHolder;
         }
 
         @Override
@@ -68,6 +70,7 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             holder.getIconLayer().setImageResource(layerTrip.getIcon()); //se le pasa el R.drawable directamente al crearlo
             holder.getTxtPosition().setText(String.valueOf(position));
             holder.getExpandable().setText(activ.getResources().getString(R.string.txtExpandable) + " (" + layerTrip.getPlaces().size() + ")");
+            holder.getListView().setAdapter(this.ctrl.getAdapterList().get(position));
             
             //TODO mapear el listado
 

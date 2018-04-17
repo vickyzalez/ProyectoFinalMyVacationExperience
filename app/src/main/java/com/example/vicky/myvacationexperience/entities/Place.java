@@ -1,35 +1,41 @@
 package com.example.vicky.myvacationexperience.entities;
 
+import android.media.Rating;
+import android.net.Uri;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Created by Vicky on 10/2/2018.
  */
 
 public class Place implements Serializable{
-    private long id;
+    private String id;
     private String name;
-    private String description;
-    private double latitude;
-    private double longitude;
+    private String address;
+    private Double latitude;
+    private Double longitude;
 
     public Place(){
 
     }
 
-    public Place(long id, String name, String description, double latitude, double longitude) {
+    public Place(String id, String name, String address, LatLng latLng) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.address = address;
+        this.latitude = latLng.latitude;
+        this.longitude = latLng.longitude;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -41,27 +47,27 @@ public class Place implements Serializable{
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }

@@ -1,19 +1,27 @@
 package com.example.vicky.myvacationexperience.activities.trip_activity;
 
 import android.content.Intent;
+import android.media.Rating;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.activities.place_activity.PlacesActivity;
+import com.example.vicky.myvacationexperience.entities.LayerTrip;
+import com.example.vicky.myvacationexperience.entities.Place;
 import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class TripActivity extends AppCompatActivity {
     TripControl ctrl;
@@ -22,12 +30,28 @@ public class TripActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
+        List<LayerView> adapterList=new ArrayList<LayerView>();
 
         TripModel model = new TripModel();
         TripControl control = new TripControl(this,model);
         TripView view = new TripView(control, this);
         control.setView(view);
         control.loadList();
+        for (LayerTrip layerTrip: model.getTrip().getLayers()){
+            //se debe eliminar cuando ya se puedan cargar los plances
+            if (layerTrip.getPlaces().size() == 0){
+                layerTrip.getPlaces().add(new Place("ChIJfdN7-eVYwokRUi2PrjJ99e4", "Dylan's Candy Bar", "1011 3rd Ave, New York, NY 10065, EE. UU.",
+                        new LatLng(40.7622797,-73.9679976)));
+                layerTrip.getPlaces().add(new Place("ChIJqaiomQBZwokRTHOaUG7fUTs", "New York Public Library", "476 5th Ave, New York, NY 10018, EE. UU.",
+                        new LatLng(40.7540274,-73.9839411)));
+            }
+            LayerView layerView = new LayerView(ctrl,this,layerTrip);
+            adapterList.add(layerView);
+            control.setAdapterList(adapterList);
+        }
+
+
+
 
         ctrl = control;
 

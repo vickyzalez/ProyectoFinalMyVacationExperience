@@ -7,12 +7,14 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.opengl.Visibility;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.dialogs.NewLayerDialogFragment;
@@ -37,7 +39,15 @@ public class TripControl implements View.OnClickListener{
     private TripModel model;
     private TripView view;
     private LayerTrip layerView; //para ver cual seleccionó
+    private List<LayerView> adapterList;
 
+    public List<LayerView> getAdapterList() {
+        return adapterList;
+    }
+
+    public void setAdapterList(List<LayerView> adapterList) {
+        this.adapterList = adapterList;
+    }
 
     public TripControl(TripActivity activity, TripModel model)  {
         this.activity = activity;
@@ -108,6 +118,18 @@ public class TripControl implements View.OnClickListener{
                 newFragment.show(ft, "prueba");
                 break;
 
+            case R.id.txtExpandable:
+                //se fija si se clickea para abrir el listado
+                ItemLayerViewHolder viewHolderExp = new ItemLayerViewHolder((View)v.getParent());
+                final Integer positionLayerSelectedExp = Integer.valueOf(viewHolderExp.getTxtPosition().getText().toString());
+
+                // layerView = getSelectedLayer((View)v.getParent());
+
+                this.activateExpandable(viewHolderExp.getListView());
+
+
+                break;
+
             case R.id.btnMoreOptions2:
                 //se fija por las opciones del trip (editar/borrar)
                 ItemLayerViewHolder viewHolder = new ItemLayerViewHolder((View)v.getParent());
@@ -124,7 +146,6 @@ public class TripControl implements View.OnClickListener{
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         layerView = getSelectedLayer((View)view.getParent());
-
 
 
                         if (item.getItemId() == R.id.menu_delete){
@@ -184,6 +205,7 @@ public class TripControl implements View.OnClickListener{
 
     }
 
+
     private LayerTrip getSelectedLayer(View v){
         ItemLayerViewHolder item = new ItemLayerViewHolder(v);
 
@@ -199,5 +221,13 @@ public class TripControl implements View.OnClickListener{
         }
 
         return layer;
+    }
+
+    private void activateExpandable(ListView listView) {
+        if (listView.getVisibility() == View.GONE){
+            listView.setVisibility(View.VISIBLE);
+        } else {
+            listView.setVisibility(View.GONE);
+        }
     }
 }

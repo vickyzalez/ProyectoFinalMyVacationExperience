@@ -116,9 +116,9 @@ public class FileHandler {
 
                 JSONObject placeJson = arrayJsonPlace.getJSONObject(j);
 
-                place.setId(placeJson.getInt("idPlace"));
+                place.setId(placeJson.getString("idPlace"));
                 place.setName(placeJson.getString("namePlace"));
-                place.setDescription(placeJson.getString("description"));
+                place.setAddress(placeJson.getString("address"));
                 place.setLatitude(placeJson.getDouble("latitude"));
                 place.setLongitude(placeJson.getDouble("longitude"));
                 places.add(place);
@@ -220,7 +220,7 @@ public class FileHandler {
                 JSONObject jsonPlace = new JSONObject();
                 jsonPlace.put("idPlace", place.getId());
                 jsonPlace.put("namePlace", place.getName());
-                jsonPlace.put("description", place.getDescription());
+                jsonPlace.put("address", place.getAddress());
                 jsonPlace.put("latitude", place.getLatitude());
                 jsonPlace.put("longitude", place.getLongitude());
 

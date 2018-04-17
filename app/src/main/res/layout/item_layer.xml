@@ -79,6 +79,17 @@
                 android:paddingBottom="5dp"
                 android:text="TextView" />
 
+            <ListView
+                android:id="@+id/listExpandable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtExpandable"
+                android:layout_toEndOf="@+id/iconLayer"
+                android:visibility="gone"
+                android:textSize="18dp"
+                android:text="TextView" />
+
+
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -4,8 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
@@ -21,6 +23,7 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
     private ImageButton btnMoreOptions;
     private TextView txtPosition;
     private TextView expandable;
+    private ListView listView;
     //TODO falta la lista de places
 
     public ItemLayerViewHolder(View itemView) {
@@ -32,6 +35,7 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
         iconLayer = (ImageView) itemView.findViewById(R.id.iconLayer);
         txtPosition = (TextView) itemView.findViewById(R.id.txtPosition);
         expandable = (TextView) itemView.findViewById(R.id.txtExpandable);
+        listView = (ListView) itemView.findViewById(R.id.listExpandable);
     }
 
     public TextView getTxtLayerName() {
@@ -78,7 +82,15 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
         return expandable;
     }
 
-    public void setExpandable(TextView expandable) {
+    public void setExpandable(CheckedTextView expandable) {
         this.expandable = expandable;
+    }
+
+    public ListView getListView() {
+        return listView;
+    }
+
+    public void setListView(ListView listView) {
+        this.listView = listView;
     }
 }
