@@ -22,6 +22,7 @@
     <string name="txtHomeQuiero">Quiero...</string>
     <string name="txtHome">Bienvenido Viajero! Qué te gustaría hacer hoy?</string>
     <string name="txtExpandable">Ver todos los lugares</string>
+    <string name="popupConfirmPlace">No se verá en el mapa si se elimina</string>
     />
 
 </resources>

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.utilities.ExpandedListView;
 
 /**
  * Created by Vicky on 10/2/2018.
@@ -23,7 +24,7 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
     private ImageButton btnMoreOptions;
     private TextView txtPosition;
     private TextView expandable;
-    private ListView listView;
+    private ExpandedListView listView;
     //TODO falta la lista de places
 
     public ItemLayerViewHolder(View itemView) {
@@ -35,7 +36,7 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
         iconLayer = (ImageView) itemView.findViewById(R.id.iconLayer);
         txtPosition = (TextView) itemView.findViewById(R.id.txtPosition);
         expandable = (TextView) itemView.findViewById(R.id.txtExpandable);
-        listView = (ListView) itemView.findViewById(R.id.listExpandable);
+        listView = (ExpandedListView) itemView.findViewById(R.id.listExpandable);
     }
 
     public TextView getTxtLayerName() {
@@ -86,11 +87,11 @@ public class ItemLayerViewHolder extends RecyclerView.ViewHolder {
         this.expandable = expandable;
     }
 
-    public ListView getListView() {
+    public ExpandedListView getListView() {
         return listView;
     }
 
-    public void setListView(ListView listView) {
+    public void setListView(ExpandedListView listView) {
         this.listView = listView;
     }
 }

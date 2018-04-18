@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.activities.trip_activity.LayerView;
 import com.example.vicky.myvacationexperience.activities.trip_activity.TripActivity;
 import com.example.vicky.myvacationexperience.activities.trip_activity.TripControl;
 import com.example.vicky.myvacationexperience.entities.LayerTrip;
@@ -24,6 +25,8 @@ import com.example.vicky.myvacationexperience.utilities.FileHandler;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Vicky on 11/2/2018.
@@ -211,6 +214,14 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
 
                     LayerTrip layer = new LayerTrip(this.layerName.getText().toString(),this.icon,true);
                     control.getLayers().add(layer);
+                    LayerView layerViewAdapter = new LayerView(control, activity, layer, tripModify);
+                    if(control.getAdapterList() == null || control.getAdapterList().isEmpty()){
+                        List<LayerView> arrayList = new ArrayList<>();
+                        arrayList.add(layerViewAdapter);
+                        control.setAdapterList(arrayList);
+                    } else {
+                        control.getAdapterList().add(layerViewAdapter);
+                    }
 
                     //se guarda en el celu
                     try {

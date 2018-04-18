@@ -39,6 +39,7 @@ public class TripControl implements View.OnClickListener{
     private TripModel model;
     private TripView view;
     private LayerTrip layerView; //para ver cual seleccionó
+    private LayerTrip layerExp; //para ver cual seleccionó en el expandable
     private List<LayerView> adapterList;
 
     public List<LayerView> getAdapterList() {
@@ -123,9 +124,11 @@ public class TripControl implements View.OnClickListener{
                 ItemLayerViewHolder viewHolderExp = new ItemLayerViewHolder((View)v.getParent());
                 final Integer positionLayerSelectedExp = Integer.valueOf(viewHolderExp.getTxtPosition().getText().toString());
 
-                // layerView = getSelectedLayer((View)v.getParent());
-
                 this.activateExpandable(viewHolderExp.getListView());
+
+                layerExp = getSelectedLayer((View)v.getParent());
+
+                    Log.d("verQueHay", layerExp.getName());
 
 
                 break;
@@ -146,7 +149,6 @@ public class TripControl implements View.OnClickListener{
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         layerView = getSelectedLayer((View)view.getParent());
-
 
                         if (item.getItemId() == R.id.menu_delete){
 
@@ -172,8 +174,6 @@ public class TripControl implements View.OnClickListener{
                                             }
                                         }})
                                     .setNegativeButton(R.string.btnCancel, null).show();
-
-
 
                         } else {
                             //es edit, llama de nuevo al Dialog
@@ -229,5 +229,9 @@ public class TripControl implements View.OnClickListener{
         } else {
             listView.setVisibility(View.GONE);
         }
+    }
+
+    public TripView getView() {
+        return view;
     }
 }
