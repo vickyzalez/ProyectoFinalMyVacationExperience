@@ -42,8 +42,9 @@ public class LayerView extends BaseAdapter {
         private LayerTrip layer;
         private List<Place> places;
         private Trip trip;
+        private int index;
 
-        public LayerView(TripControl ctrl, Activity activity, LayerTrip layerTrip, Trip trip) {
+        public LayerView(TripControl ctrl, Activity activity, LayerTrip layerTrip, Trip trip, int index) {
             //
             /*this.imgPlace = (ImageButton) activity.findViewById(R.id.btnDeletePlace);
             imgPlace.setOnClickListener(ctrl);
@@ -54,6 +55,7 @@ public class LayerView extends BaseAdapter {
             this.places = layerTrip.getPlaces();
             this.layer = layerTrip;
             this.trip = trip;
+            this.index = index;
 
             this.ctrl = ctrl;
 
@@ -129,7 +131,7 @@ public class LayerView extends BaseAdapter {
                                 try {
                                     FileHandler.saveTrip(trip, act);
                                     thisLV.notifyDataSetChanged();
-                                    thisLV.ctrl.getView().notifyDataSetChanged();
+                                    thisLV.ctrl.getView().notifyItemChanged(index);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 } catch (JSONException e) {

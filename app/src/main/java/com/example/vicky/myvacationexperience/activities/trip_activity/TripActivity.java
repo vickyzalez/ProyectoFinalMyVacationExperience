@@ -38,6 +38,8 @@ public class TripActivity extends AppCompatActivity {
         control.setView(view);
         control.loadList();
 
+        int indexLayer = 0;
+
         for (LayerTrip layerTrip: model.getTrip().getLayers()){
             //TODO se debe eliminar cuando ya se puedan cargar los plances
             if (layerTrip.getPlaces().size() == 0){
@@ -45,11 +47,16 @@ public class TripActivity extends AppCompatActivity {
                         new LatLng(40.7622797,-73.9679976)));
                 layerTrip.getPlaces().add(new Place("ChIJqaiomQBZwokRTHOaUG7fUTs", "New York Public Library", "476 5th Ave, New York, NY 10018, EE. UU.",
                         new LatLng(40.7540274,-73.9839411)));
+                layerTrip.getPlaces().add(new Place("ChIJfdN7-eVYwokRUi2PrjJ99e4", "Dylan's Candy Bar", "1011 3rd Ave, New York, NY 10065, EE. UU.",
+                        new LatLng(40.7622797,-73.9679976)));
+                layerTrip.getPlaces().add(new Place("ChIJqaiomQBZwokRTHOaUG7fUTs", "New York Public Library", "476 5th Ave, New York, NY 10018, EE. UU.",
+                        new LatLng(40.7540274,-73.9839411)));
             }
 
-            LayerView layerView = new LayerView(control,this,layerTrip, model.getTrip());
+            LayerView layerView = new LayerView(control,this,layerTrip, model.getTrip(), indexLayer);
             adapterList.add(layerView);
             control.setAdapterList(adapterList);
+            indexLayer++;
         }
 
 

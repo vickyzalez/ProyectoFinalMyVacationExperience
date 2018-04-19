@@ -213,8 +213,9 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
                 if (layerModify == null){
 
                     LayerTrip layer = new LayerTrip(this.layerName.getText().toString(),this.icon,true);
+                    int index = (control.getLayers().size());
                     control.getLayers().add(layer);
-                    LayerView layerViewAdapter = new LayerView(control, activity, layer, tripModify);
+                    LayerView layerViewAdapter = new LayerView(control, activity, layer, tripModify, index);
                     if(control.getAdapterList() == null || control.getAdapterList().isEmpty()){
                         List<LayerView> arrayList = new ArrayList<>();
                         arrayList.add(layerViewAdapter);
