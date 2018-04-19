@@ -119,17 +119,39 @@ public class TripControl implements View.OnClickListener{
                 newFragment.show(ft, "prueba");
                 break;
 
+            case R.id.chkVisible:
+                ItemLayerViewHolder viewHolderCheck = new ItemLayerViewHolder((View)v.getParent());
+                final Integer positionLayer = Integer.valueOf(viewHolderCheck.getTxtPosition().getText().toString());
+                layerView = getSelectedLayer((View)v.getParent());
+                layerView.setVisible(viewHolderCheck.getChkVisible().isChecked());
+
+                for(LayerTrip layer: model.getTrip().getLayers()){
+                    if(layer.getName().equals(layerView.getName())){
+                        layer = layerView;
+
+                        //graba trip modificado
+                        try {
+                            FileHandler.saveTrip(model.getTrip(), activity);
+                            updateList(layer, positionLayer);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                break;
+
+
+
             case R.id.txtExpandable:
                 //se fija si se clickea para abrir el listado
                 ItemLayerViewHolder viewHolderExp = new ItemLayerViewHolder((View)v.getParent());
-                final Integer positionLayerSelectedExp = Integer.valueOf(viewHolderExp.getTxtPosition().getText().toString());
 
                 this.activateExpandable(viewHolderExp.getListView());
 
                 layerExp = getSelectedLayer((View)v.getParent());
-
-                    Log.d("verQueHay", layerExp.getName());
-
 
                 break;
 
@@ -199,7 +221,7 @@ public class TripControl implements View.OnClickListener{
                 break;
 
             default:
-                //TODO mostrar el listado de los places de cada Capa
+
                 break;
         }
 

@@ -131,7 +131,12 @@ public class LayerView extends BaseAdapter {
                                 try {
                                     FileHandler.saveTrip(trip, act);
                                     thisLV.notifyDataSetChanged();
-                                    thisLV.ctrl.getView().notifyItemChanged(index);
+                                    TripView tripView = thisLV.ctrl.getView();
+                                    //para que no se comprima la primera vez
+                                    if(tripView.getFirstDeletion()){
+                                        tripView.setVisibiltyGone(true);
+                                    }
+                                    tripView.notifyItemChanged(index);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 } catch (JSONException e) {

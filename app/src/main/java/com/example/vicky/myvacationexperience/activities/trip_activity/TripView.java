@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,8 +29,20 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
         private TripControl ctrl;
         private TextView message;
         private Activity activ;
+        private CheckBox checkBox;
+        private Boolean isFirstDeletion;
 
-        public TripView(TripControl ctrl,Activity activity) {
+    public Boolean getFirstDeletion() {
+        return isFirstDeletion;
+    }
+
+    private Boolean isVisibiltyGone;
+
+    public void setVisibiltyGone(Boolean visibiltyGone) {
+        isVisibiltyGone = visibiltyGone;
+    }
+
+    public TripView(TripControl ctrl, Activity activity) {
             //boton nuevo trip
             this.addLayer = (FloatingActionButton) activity.findViewById(R.id.addLayer);
             addLayer.setOnClickListener(ctrl);
@@ -45,6 +58,11 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
 
             this.activ = activity;
 
+            this.isFirstDeletion = true;
+
+            this.isVisibiltyGone = false;
+
+
 
         }
 
@@ -57,6 +75,7 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             ItemLayerViewHolder itemLayerViewHolder = new ItemLayerViewHolder(v);
             itemLayerViewHolder.getBtnMoreOptions().setOnClickListener(ctrl);
             itemLayerViewHolder.getExpandable().setOnClickListener(ctrl);
+            itemLayerViewHolder.getChkVisible().setOnClickListener(ctrl);
 
             return itemLayerViewHolder;
         }
@@ -71,8 +90,13 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
             holder.getTxtPosition().setText(String.valueOf(position));
             holder.getExpandable().setText(activ.getResources().getString(R.string.txtExpandable) + " (" + layerTrip.getPlaces().size() + ")");
             holder.getListView().setAdapter(this.ctrl.getAdapterList().get(position));
-            
-            //TODO mapear el listado
+            // para desplegable 1er delete
+            if(this.isVisibiltyGone){
+                holder.getListView().setVisibility(View.VISIBLE);
+                this.isVisibiltyGone = false;
+                this.isFirstDeletion = false;
+            }
+
 
         }
         @Override
