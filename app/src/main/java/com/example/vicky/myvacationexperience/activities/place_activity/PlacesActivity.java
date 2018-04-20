@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.vicky.myvacationexperience.R;
 
+import com.example.vicky.myvacationexperience.entities.LayerTrip;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -21,14 +22,19 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class PlacesActivity extends AppCompatActivity implements OnConnectionFailedListener, OnMapReadyCallback{
 
@@ -63,7 +69,6 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 .enableAutoManage(this, this)
                 .build();
 
-        //TODO ACA SE DEBERIAN CARGAR LOS PLACES DEL TRIP
 
         placeAutoComplete = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete);
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -158,6 +163,35 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
+        //TODO ACA SE DEBERIAN CARGAR LOS PLACES DEL TRIP
+        for(LayerTrip layer: ctrl.getTrip().getLayers()){
+            if (layer.getVisible()){
+                for (com.example.vicky.myvacationexperience.entities.Place placeLayer: layer.getPlaces()){
+                    MarkerOptions marker = new MarkerOptions()
+                            .position(new LatLng(placeLayer.getLatitude(),placeLayer.getLongitude()))
+                            .title(placeLayer.getName().toString())
+                            .icon(BitmapDescriptorFactory.fromResource(layer.getIcon()));
+
+                    mMap.addMarker(marker);
+                    markers.add(marker);
+
+                }
+            }
+        }
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (MarkerOptions mark : markers) {
+            builder.include(mark.getPosition());
+        }
+        LatLngBounds bounds = builder.build();
+
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
+
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+        mMap.animateCamera(cu);
     }
 
 }
