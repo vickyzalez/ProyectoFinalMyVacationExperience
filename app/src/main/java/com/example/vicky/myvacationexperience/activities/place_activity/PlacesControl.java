@@ -19,6 +19,13 @@ import com.example.vicky.myvacationexperience.entities.LayerTrip;
 import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
 import com.example.vicky.myvacationexperience.viewholders.ItemTripViewHolder;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 
@@ -80,5 +87,37 @@ public class PlacesControl implements View.OnClickListener{
         Trip trip = (Trip) activity.getIntent().getSerializableExtra("Trip");
         model.setTrip(trip);
 
+    }
+
+    public void loadPlaces(ArrayList<MarkerOptions> markers, GoogleMap mMap) {
+        for(LayerTrip layer: getTrip().getLayers()){
+            if (layer.getVisible()){
+                for (com.example.vicky.myvacationexperience.entities.Place placeLayer: layer.getPlaces()){
+                    MarkerOptions marker = new MarkerOptions()
+                            .position(new LatLng(placeLayer.getLatitude(),placeLayer.getLongitude()))
+                            .title(placeLayer.getName().toString())
+                            .icon(BitmapDescriptorFactory.fromResource(layer.getIcon()));
+
+                    mMap.addMarker(marker);
+                    markers.add(marker);
+
+                }
+            }
+        }
+    }
+
+    public void markersZoom(ArrayList<MarkerOptions> markers, GoogleMap mMap) {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (MarkerOptions mark : markers) {
+            builder.include(mark.getPosition());
+        }
+        LatLngBounds bounds = builder.build();
+
+        int width = activity.getResources().getDisplayMetrics().widthPixels;
+        int height = activity.getResources().getDisplayMetrics().heightPixels;
+        int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
+
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+        mMap.animateCamera(cu);
     }
 }

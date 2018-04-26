@@ -2,6 +2,8 @@ package com.example.vicky.myvacationexperience.activities.place_activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
@@ -21,6 +23,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,7 +37,13 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class PlacesActivity extends AppCompatActivity implements OnConnectionFailedListener, OnMapReadyCallback{
 
@@ -42,6 +51,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     private PlacesControl ctrl;
     private GoogleMap mMap;
     PlaceAutocompleteFragment placeAutoComplete;
+    private Marker lastMarker;
 
     final Activity currentActivity = this;
 
@@ -115,6 +125,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
     }
 
 
@@ -164,34 +175,71 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
-        //TODO ACA SE DEBERIAN CARGAR LOS PLACES DEL TRIP
-        for(LayerTrip layer: ctrl.getTrip().getLayers()){
-            if (layer.getVisible()){
-                for (com.example.vicky.myvacationexperience.entities.Place placeLayer: layer.getPlaces()){
-                    MarkerOptions marker = new MarkerOptions()
-                            .position(new LatLng(placeLayer.getLatitude(),placeLayer.getLongitude()))
-                            .title(placeLayer.getName().toString())
-                            .icon(BitmapDescriptorFactory.fromResource(layer.getIcon()));
+        //TODO ACA SE DEBERIAN CARGAR LOS PLACES DEL TRIP, ver con HTML
+        ctrl.loadPlaces(markers, mMap);
 
-                    mMap.addMarker(marker);
-                    markers.add(marker);
+        //Zoom
+        ctrl.markersZoom(markers, mMap);
 
+        final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        //Mostrar seleccion en mapa random
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (lastMarker != null){
+                    lastMarker.remove();
                 }
+                Marker mark = mMap.addMarker(new MarkerOptions().position(latLng));
+                lastMarker = mark;
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+/*
+                //conectarse via HTTP
+                URL url;
+                try {
+                    url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                            String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude) + "&radius=1&key=" + "AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk");
+
+                    HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    connection.setConnectTimeout(10000);
+                    connection.setDoInput(true);
+                    connection.connect();
+                    int response = connection.getResponseCode();
+
+                    if (response == 200){
+                        connection.getResponseMessage();
+                    }
+
+
+
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent(currentActivity.getApplicationContext(), currentActivity.getClass());
+
+                Place place = PlacePicker.getPlace(currentActivity, intent);
+                String placeName = String.format("Place: %s", place.getName());
+                String placeAddress =  String.format("Address: %s", place.getAddress());
+                LatLng toLatLng = place.getLatLng();
+*/
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mark.setTitle(addresses.get(0).getAddressLine(0));
+                mark.showInfoWindow();//no tiene nada para mostrar
             }
-        }
-
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (MarkerOptions mark : markers) {
-            builder.include(mark.getPosition());
-        }
-        LatLngBounds bounds = builder.build();
-
-        int width = getResources().getDisplayMetrics().widthPixels;
-        int height = getResources().getDisplayMetrics().heightPixels;
-        int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
-
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
-        mMap.animateCamera(cu);
+        });
     }
+
+
 
 }
