@@ -89,7 +89,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
             public void onPlaceSelected(Place place) {
 
                 clearMarkers();
-                
+
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(place.getLatLng())      // Sets the center of the map to Mountain View
                         .zoom(17)                   // Sets the zoom
