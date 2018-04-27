@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -119,5 +121,17 @@ public class PlacesControl implements View.OnClickListener{
 
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
         mMap.animateCamera(cu);
+    }
+
+    public String getAddressFromLatLng(LatLng latLng, Geocoder geocoder) {
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
+            return addresses.get(0).getAddressLine(0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

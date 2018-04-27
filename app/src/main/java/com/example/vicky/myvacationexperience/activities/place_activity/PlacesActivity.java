@@ -11,11 +11,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.vicky.myvacationexperience.R;
 
-import com.example.vicky.myvacationexperience.entities.LayerTrip;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -36,8 +34,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PointOfInterest;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -52,6 +53,8 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     private GoogleMap mMap;
     PlaceAutocompleteFragment placeAutoComplete;
     private Marker lastMarker;
+    private Marker lastPoi;
+    private URL url;
 
     final Activity currentActivity = this;
 
@@ -97,7 +100,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                         .position(place.getLatLng())
                         .title(place.getName().toString()));
                 selectedMarker.setTag(0);
-                selectedMarker.setSnippet("Population: 776733");
+                selectedMarker.setSnippet(place.getAddress().toString());
                 selectedMarker.showInfoWindow();
 
                 // Set a listener for marker click.
@@ -112,7 +115,6 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                     }
                 });
 
-                Log.d("Maps", "Place selected: " + place.getName() + place.getId() + place.getAddress() + place.getRating() + place.getLatLng());
             }
 
             @Override
@@ -175,13 +177,35 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
+
         //TODO ACA SE DEBERIAN CARGAR LOS PLACES DEL TRIP, ver con HTML
         ctrl.loadPlaces(markers, mMap);
-
         //Zoom
         ctrl.markersZoom(markers, mMap);
 
         final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        //Mostrar seleccion en mapa poi
+        mMap.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
+            @Override
+            public void onPoiClick(PointOfInterest pointOfInterest) {
+                if (lastPoi != null){
+                    lastPoi.remove();
+                }
+                if (lastMarker != null){
+                    lastMarker.remove();
+                }
+                Marker poi = mMap.addMarker(new MarkerOptions().position(pointOfInterest.latLng));
+                lastPoi = poi;
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(pointOfInterest.latLng));
+                poi.setTitle(pointOfInterest.name);
+
+                String address = ctrl.getAddressFromLatLng(pointOfInterest.latLng, geocoder);
+
+                poi.setSnippet(address);
+                poi.showInfoWindow();
+            }
+        });
 
         //Mostrar seleccion en mapa random
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -190,55 +214,21 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 if (lastMarker != null){
                     lastMarker.remove();
                 }
+                if (lastPoi != null){
+                    lastPoi.remove();
+                }
                 Marker mark = mMap.addMarker(new MarkerOptions().position(latLng));
                 lastMarker = mark;
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-/*
-                //conectarse via HTTP
-                URL url;
-                try {
-                    url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                            String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude) + "&radius=1&key=" + "AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk");
 
-                    HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setRequestProperty("Content-Type", "application/json");
-                    connection.setConnectTimeout(10000);
-                    connection.setDoInput(true);
-                    connection.connect();
-                    int response = connection.getResponseCode();
+                String address = ctrl.getAddressFromLatLng(latLng, geocoder);
 
-                    if (response == 200){
-                        connection.getResponseMessage();
-                    }
-
-
-
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                Intent intent = new Intent(currentActivity.getApplicationContext(), currentActivity.getClass());
-
-                Place place = PlacePicker.getPlace(currentActivity, intent);
-                String placeName = String.format("Place: %s", place.getName());
-                String placeAddress =  String.format("Address: %s", place.getAddress());
-                LatLng toLatLng = place.getLatLng();
-*/
-                List<Address> addresses = null;
-                try {
-                    addresses = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                mark.setTitle(addresses.get(0).getAddressLine(0));
-                mark.showInfoWindow();//no tiene nada para mostrar
+                mark.setTitle(address);
+                mark.showInfoWindow();
             }
         });
     }
+
 
 
 
