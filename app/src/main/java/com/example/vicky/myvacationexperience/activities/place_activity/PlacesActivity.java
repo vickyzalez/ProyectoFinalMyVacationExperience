@@ -52,11 +52,10 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     private PlacesControl ctrl;
     private GoogleMap mMap;
     PlaceAutocompleteFragment placeAutoComplete;
+
     private Marker lastMarker;
     private Marker lastPoi;
-    private URL url;
-
-    final Activity currentActivity = this;
+    private Marker lastSearched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +88,8 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
             @Override
             public void onPlaceSelected(Place place) {
 
+                clearMarkers();
+                
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(place.getLatLng())      // Sets the center of the map to Mountain View
                         .zoom(17)                   // Sets the zoom
@@ -99,6 +100,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 Marker selectedMarker = mMap.addMarker(new MarkerOptions()
                         .position(place.getLatLng())
                         .title(place.getName().toString()));
+                lastSearched = selectedMarker;
                 selectedMarker.setTag(0);
                 selectedMarker.setSnippet(place.getAddress().toString());
                 selectedMarker.showInfoWindow();
@@ -189,12 +191,9 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         mMap.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
             @Override
             public void onPoiClick(PointOfInterest pointOfInterest) {
-                if (lastPoi != null){
-                    lastPoi.remove();
-                }
-                if (lastMarker != null){
-                    lastMarker.remove();
-                }
+
+                clearMarkers();
+
                 Marker poi = mMap.addMarker(new MarkerOptions().position(pointOfInterest.latLng));
                 lastPoi = poi;
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(pointOfInterest.latLng));
@@ -211,12 +210,9 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if (lastMarker != null){
-                    lastMarker.remove();
-                }
-                if (lastPoi != null){
-                    lastPoi.remove();
-                }
+
+                clearMarkers();
+
                 Marker mark = mMap.addMarker(new MarkerOptions().position(latLng));
                 lastMarker = mark;
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -229,7 +225,17 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         });
     }
 
-
+    private void clearMarkers() {
+        if (lastPoi != null){
+            lastPoi.remove();
+        }
+        if (lastMarker != null){
+            lastMarker.remove();
+        }
+        if (lastSearched != null){
+            lastSearched.remove();
+        }
+    }
 
 
 }
