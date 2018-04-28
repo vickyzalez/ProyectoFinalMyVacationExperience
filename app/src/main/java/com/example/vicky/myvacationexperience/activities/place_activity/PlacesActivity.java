@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.utilities.CustomMarkerInfo;
+import com.example.vicky.myvacationexperience.utilities.MarkerInfoData;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,20 +38,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class PlacesActivity extends AppCompatActivity implements OnConnectionFailedListener, OnMapReadyCallback{
 
     private GoogleApiClient mGoogleApiClient;
     private PlacesControl ctrl;
+    private Activity act;
     private GoogleMap mMap;
     PlaceAutocompleteFragment placeAutoComplete;
 
@@ -69,6 +65,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         control.loadTrip();
 
         ctrl = control;
+        act = this;
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(model.getTrip().getName());
@@ -202,6 +199,15 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 String address = ctrl.getAddressFromLatLng(pointOfInterest.latLng, geocoder);
 
                 poi.setSnippet(address);
+
+                MarkerInfoData info = new MarkerInfoData();
+                CustomMarkerInfo customMarkerInfo = new CustomMarkerInfo(act);
+                mMap.setInfoWindowAdapter(customMarkerInfo);
+
+                info.setMarkerName(poi.getTitle());
+                info.setMarkerAddress(poi.getSnippet());
+                poi.setTag(info);
+
                 poi.showInfoWindow();
             }
         });
@@ -219,7 +225,16 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
                 String address = ctrl.getAddressFromLatLng(latLng, geocoder);
 
+                MarkerInfoData info = new MarkerInfoData();
+                CustomMarkerInfo customMarkerInfo = new CustomMarkerInfo(act);
+                mMap.setInfoWindowAdapter(customMarkerInfo);
+
                 mark.setTitle(address);
+
+                info.setMarkerName(mark.getTitle());
+                info.setMarkerAddress(mark.getSnippet());
+                mark.setTag(info);
+
                 mark.showInfoWindow();
             }
         });
