@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/txtPlaceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/newplacename"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="81dp"
+        android:gravity="center_horizontal"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnNewPlaceCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPlaceName"
+        android:layout_marginEnd="11dp"
+        android:layout_marginTop="24dp"
+        android:layout_toStartOf="@+id/btnNewPlaceOk"
+        android:text="@string/btnCancel" />
+
+    <Button
+        android:id="@+id/btnNewPlaceOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnNewPlaceCancel"
+        android:layout_alignBottom="@+id/btnNewPlaceCancel"
+        android:layout_alignEnd="@+id/txtPlaceName"
+        android:layout_marginEnd="13dp"
+        android:text="@string/btnOk" />
+</RelativeLayout>

@@ -16,6 +16,8 @@ import android.view.View;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.activities.trip_activity.TripActivity;
+import com.example.vicky.myvacationexperience.dialogs.NewLayerDialogFragment;
+import com.example.vicky.myvacationexperience.dialogs.NewPlaceDialogFragment;
 import com.example.vicky.myvacationexperience.dialogs.NewTripDialogFragment;
 import com.example.vicky.myvacationexperience.entities.LayerTrip;
 import com.example.vicky.myvacationexperience.entities.Trip;
@@ -51,6 +53,13 @@ public class PlacesControl implements View.OnClickListener{
 
     }
 
+    public PlacesModel getModel() {
+        return model;
+    }
+
+    public void setModel(PlacesModel model) {
+        this.model = model;
+    }
 
     public void setView(PlacesView view) {
         this.view = view;
@@ -67,13 +76,25 @@ public class PlacesControl implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.addTrip:
+            case R.id.btnAddPlace:
+                //Para poder mostrar el popup
+                // DialogFragment.show() will take care of adding the fragment
+                // in a transaction.  We also want to remove any currently showing
+                // dialog, so make our own transaction and take care of that here.
+                FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+                Fragment prev = activity.getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
 
-
+                // Create and show the dialog.
+                DialogFragment newFragment = NewPlaceDialogFragment.newInstance(activity, this, model.getTrip(), model.getPlace());
+                newFragment.show(ft, "prueba");
                 break;
 
             default:
-/*
+                /*
                 Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
                 intent.putExtra("Trip", trip);
                 activity.startActivityForResult(intent, 1);
@@ -98,6 +119,7 @@ public class PlacesControl implements View.OnClickListener{
                     MarkerOptions marker = new MarkerOptions()
                             .position(new LatLng(placeLayer.getLatitude(),placeLayer.getLongitude()))
                             .title(placeLayer.getName().toString())
+                            .snippet(placeLayer.getAddress().toString())
                             .icon(BitmapDescriptorFactory.fromResource(layer.getIcon()));
 
                     mMap.addMarker(marker);

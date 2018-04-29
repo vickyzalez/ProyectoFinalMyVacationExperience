@@ -1,18 +1,20 @@
 package com.example.vicky.myvacationexperience.activities.place_activity;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.dialogs.NewPlaceDialogFragment;
 import com.example.vicky.myvacationexperience.utilities.CustomMarkerInfo;
 import com.example.vicky.myvacationexperience.utilities.MarkerInfoData;
 
@@ -23,17 +25,13 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
@@ -45,13 +43,20 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
     private GoogleApiClient mGoogleApiClient;
     private PlacesControl ctrl;
-    private Activity act;
     private GoogleMap mMap;
     PlaceAutocompleteFragment placeAutoComplete;
 
     private Marker lastMarker;
     private Marker lastPoi;
     private Marker lastSearched;
+
+    public PlacesControl getCtrl() {
+        return ctrl;
+    }
+
+    public void setCtrl(PlacesControl ctrl) {
+        this.ctrl = ctrl;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,6 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         control.loadTrip();
 
         ctrl = control;
-        act = this;
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(model.getTrip().getName());
@@ -100,19 +104,10 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 lastSearched = selectedMarker;
                 selectedMarker.setTag(0);
                 selectedMarker.setSnippet(place.getAddress().toString());
+
+                drawMarker(selectedMarker, place.getId());
+
                 selectedMarker.showInfoWindow();
-
-                // Set a listener for marker click.
-                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-
-                            // Return false to indicate that we have not consumed the event and that we wish
-                            // for the default behavior to occur (which is for the camera to move such that the
-                            // marker is centered and for the marker's info window to open, if it has one).
-                            return false;
-                    }
-                });
 
             }
 
@@ -185,6 +180,21 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
         //Mostrar seleccion en mapa poi
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                clearMarkers();
+                // Return false to indicate that we have not consumed the event and that we wish
+                // for the default behavior to occur (which is for the camera to move such that the
+                // marker is centered and for the marker's info window to open, if it has one).
+                //return false;
+                drawMarker(marker, null);
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                marker.showInfoWindow();
+                return true;
+            }
+        });
+
         mMap.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
             @Override
             public void onPoiClick(PointOfInterest pointOfInterest) {
@@ -200,13 +210,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
                 poi.setSnippet(address);
 
-                MarkerInfoData info = new MarkerInfoData();
-                CustomMarkerInfo customMarkerInfo = new CustomMarkerInfo(act);
-                mMap.setInfoWindowAdapter(customMarkerInfo);
-
-                info.setMarkerName(poi.getTitle());
-                info.setMarkerAddress(poi.getSnippet());
-                poi.setTag(info);
+                drawMarker(poi, pointOfInterest.placeId);
 
                 poi.showInfoWindow();
             }
@@ -224,20 +228,51 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
                 String address = ctrl.getAddressFromLatLng(latLng, geocoder);
+                mark.setTitle(getResources().getString(R.string.markerSelected));
+                mark.setSnippet(address);
 
-                MarkerInfoData info = new MarkerInfoData();
-                CustomMarkerInfo customMarkerInfo = new CustomMarkerInfo(act);
-                mMap.setInfoWindowAdapter(customMarkerInfo);
-
-                mark.setTitle(address);
-
-                info.setMarkerName(mark.getTitle());
-                info.setMarkerAddress(mark.getSnippet());
-                mark.setTag(info);
+                drawMarker(mark, "-1");
 
                 mark.showInfoWindow();
             }
         });
+
+        final PlacesActivity activity = this;
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+                Fragment prev = activity.getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                DialogFragment newFragment = NewPlaceDialogFragment.newInstance(activity, activity.getCtrl(), activity.getCtrl().getModel().getTrip(), activity.getCtrl().getModel().getPlace());
+                newFragment.show(ft, "prueba");
+            }
+        });
+    }
+
+
+
+    public void drawMarker(Marker mark, String id) {
+        MarkerInfoData info = new MarkerInfoData();
+        CustomMarkerInfo customMarkerInfo = new CustomMarkerInfo(this, ctrl);
+        mMap.setInfoWindowAdapter(customMarkerInfo);
+
+        info.setMarkerName(mark.getTitle());
+        info.setMarkerAddress(mark.getSnippet());
+        mark.setTag(info);
+
+        if (id != null && id != "-1"){
+            ctrl.getModel().setPlace(new com.example.vicky.myvacationexperience.entities.Place(id,mark.getTitle(), mark.getSnippet(),mark.getPosition()));
+        } else {
+            if (id == "-1"){
+                ctrl.getModel().setPlace(new com.example.vicky.myvacationexperience.entities.Place(mark.getId(),mark.getTitle(), mark.getSnippet(),mark.getPosition()));
+            }
+        }
     }
 
     private void clearMarkers() {

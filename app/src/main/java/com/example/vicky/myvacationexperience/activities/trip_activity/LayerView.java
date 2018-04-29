@@ -45,11 +45,6 @@ public class LayerView extends BaseAdapter {
         private int index;
 
         public LayerView(TripControl ctrl, Activity activity, LayerTrip layerTrip, Trip trip, int index) {
-            //
-            /*this.imgPlace = (ImageButton) activity.findViewById(R.id.btnDeletePlace);
-            imgPlace.setOnClickListener(ctrl);
-
-            this.txtNamePlace = (TextView) activity.findViewById(R.id.txtPlaceChild);*/
 
             this.places = new ArrayList<Place>();
             this.places = layerTrip.getPlaces();
@@ -69,16 +64,6 @@ public class LayerView extends BaseAdapter {
     public int getCount() {
         return places.size();
     }
-
-    /*public void clear() {
-        places.clear();
-    }
-
-    public void addAll(ArrayList<Place> category) {
-        for (int i = 0; i < category.size(); i++) {
-            places.add(category.get(i));
-        }
-    }*/
 
     @Override
     public Object getItem(int i) {

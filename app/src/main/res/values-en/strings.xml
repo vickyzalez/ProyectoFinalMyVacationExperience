@@ -23,4 +23,6 @@
     <string name="txtHome">Welcome Traveler! What do you want to do today?</string>
     <string name="txtExpandable">See all places</string>
     <string name="popupConfirmPlace">It won\'t be seen on map if you delete it</string>
+    <string name="newplacename" >Place name</string>
+    <string name="markerSelected">New place</string>
 </resources>
