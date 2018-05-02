@@ -25,4 +25,5 @@
     <string name="popupConfirmPlace">It won\'t be seen on map if you delete it</string>
     <string name="newplacename" >Place name</string>
     <string name="markerSelected">New place</string>
+    <string name="noLayersMap">Create at least one category before searching for any places to add</string>
 </resources>

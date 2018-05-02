@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.activities.place_activity.PlacesActivity;
@@ -25,6 +26,7 @@ import java.util.Locale;
 
 public class TripActivity extends AppCompatActivity {
     TripControl ctrl;
+    TripView viewTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class TripActivity extends AppCompatActivity {
 
 
         ctrl = control;
+        viewTrip = view;
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(model.getTrip().getName());
@@ -76,9 +79,14 @@ public class TripActivity extends AppCompatActivity {
 
             case R.id.actionMap:
 
-                Intent intent = new Intent(this.getApplicationContext(), PlacesActivity.class);
-                intent.putExtra("Trip", this.ctrl.getTrip());
-                this.startActivityForResult(intent, 1);
+                if (ctrl.getLayers().size() == 0){
+                    Toast toast = Toast.makeText(this, R.string.noLayersMap, Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    Intent intent = new Intent(this.getApplicationContext(), PlacesActivity.class);
+                    intent.putExtra("Trip", this.ctrl.getTrip());
+                    this.startActivityForResult(intent, 1);
+                }
                 return true;
 
             default:
@@ -104,7 +112,18 @@ public class TripActivity extends AppCompatActivity {
         if(requestCode == 1 && resultCode == 1){
             super.onActivityResult(requestCode,resultCode,data);
             Trip trip = (Trip) data.getSerializableExtra("Trip");
-            this.ctrl.getTrip().setLayers(trip.getLayers()); //probar
+            //this.ctrl.getTrip().setLayers(trip.getLayers()); //probar
+            this.ctrl.setTrip(trip);
+            this.viewTrip.notifyDataSetChanged();
+            int i = 0;
+            for (LayerView adapter: ctrl.getAdapterList()){
+                adapter.setTrip(trip);
+                adapter.setLayer(trip.getLayers().get(i));
+                adapter.setPlaces(trip.getLayers().get(i).getPlaces());
+                adapter.notifyDataSetChanged();
+                i++;
+            }
+
         }
     }
 

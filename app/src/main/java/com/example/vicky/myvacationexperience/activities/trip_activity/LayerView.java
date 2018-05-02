@@ -22,6 +22,7 @@ import com.example.vicky.myvacationexperience.entities.Place;
 import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
 import com.example.vicky.myvacationexperience.viewholders.ItemLayerViewHolder;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 
@@ -44,7 +45,8 @@ public class LayerView extends BaseAdapter {
         private Trip trip;
         private int index;
 
-        public LayerView(TripControl ctrl, Activity activity, LayerTrip layerTrip, Trip trip, int index) {
+
+    public LayerView(TripControl ctrl, Activity activity, LayerTrip layerTrip, Trip trip, int index) {
 
             this.places = new ArrayList<Place>();
             this.places = layerTrip.getPlaces();
@@ -59,6 +61,17 @@ public class LayerView extends BaseAdapter {
 
         }
 
+    public void setLayer(LayerTrip layer) {
+        this.layer = layer;
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = places;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
 
     @Override
     public int getCount() {
@@ -90,6 +103,9 @@ public class LayerView extends BaseAdapter {
 
         TextView name = (TextView) v.findViewById(R.id.txtPlaceChild);
         name.setText(place.getName());
+        //TODO llamar al mapa con el zoom del place cuando se seleccione
+        LatLng placeLatlng = new LatLng(place.getLatitude(),place.getLongitude());
+        //name.setOnClickListener();
 
         ImageButton imgButton = (ImageButton) v.findViewById(R.id.btnDeletePlace);
         final Activity act = activ; //para el alert

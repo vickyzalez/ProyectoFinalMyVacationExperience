@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.vicky.myvacationexperience.R;
+import com.example.vicky.myvacationexperience.activities.place_activity.PlacesActivity;
 import com.example.vicky.myvacationexperience.activities.place_activity.PlacesControl;
 import com.example.vicky.myvacationexperience.activities.trip_activity.LayerView;
 import com.example.vicky.myvacationexperience.activities.trip_activity.TripControl;
@@ -22,6 +23,8 @@ import com.example.vicky.myvacationexperience.entities.LayerTrip;
 import com.example.vicky.myvacationexperience.entities.Place;
 import com.example.vicky.myvacationexperience.entities.Trip;
 import com.example.vicky.myvacationexperience.utilities.FileHandler;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Marker;
 
 import org.json.JSONException;
 
@@ -41,24 +44,28 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
     private Button btnCancel;
     private Button btnOk;
 
-    private static Activity activity;
+    private static PlacesActivity activity;
+    private static OnMapReadyCallback onMapReadyCallback;
     private static PlacesControl control;
 
     private static Trip tripSelected;
     private static Place placeSelected;
 
     private static String[] layers;
+    private static Marker markerSelected;
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    public static NewPlaceDialogFragment newInstance(Activity act, PlacesControl placesControl, Trip trip, Place place) {
+    public static NewPlaceDialogFragment newInstance(PlacesActivity act, PlacesControl placesControl, Trip trip, Place place, Marker marker) {
         NewPlaceDialogFragment f = new NewPlaceDialogFragment();
         activity = act;
         control = placesControl;
         tripSelected = trip;
         placeSelected = place;
+        onMapReadyCallback = (OnMapReadyCallback) act;
+        markerSelected = marker;
 
         layers = new String[trip.getLayers().size()];
         int i = 0;
@@ -113,6 +120,8 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
                 for (LayerTrip layerTrip: tripSelected.getLayers()){
                     //TODO consulta por la categoria seleccionada. Falta Spinner
                     if (layerTrip.getName().toString().equals("capita")){
+                        placeSelected.setName(placeName.getText().toString());
+
                         layerTrip.getPlaces().add(placeSelected);
                         break;
                     }
@@ -120,7 +129,7 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
                 //se guarda en el celu
                 try {
                     FileHandler.saveTrip(tripSelected, activity);
-                    this.dismiss();
+                    onMapReadyCallback.onMapReady(activity.getmMap());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -129,10 +138,12 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
 
                 //Actualiza activity
                // control.updateList(layerModify, positionLayer);
+                markerSelected.setVisible(false);
                 this.dismiss();
                 break;
 
             default:
+                this.dismiss();
                 break;
         }
 

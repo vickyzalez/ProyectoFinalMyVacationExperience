@@ -58,6 +58,14 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         this.ctrl = ctrl;
     }
 
+    public GoogleMap getmMap() {
+        return mMap;
+    }
+
+    public void setmMap(GoogleMap mMap) {
+        this.mMap = mMap;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +101,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(place.getLatLng())      // Sets the center of the map to Mountain View
-                        .zoom(17)                   // Sets the zoom
+                        .zoom(16)                   // Sets the zoom
                         .build();                   // Creates a CameraPosition from the builder
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -129,6 +137,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
+                this.setResultToPreviousActivity();
                 this.finish();
                 return true;
 
@@ -146,7 +155,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
     private void setResultToPreviousActivity(){
         Intent intent = new Intent();
-        intent.putExtra("Trip", ctrl.getTrip());
+        intent.putExtra("Trip", ctrl.getModel().getTrip());
         this.setResult(1, intent);
     }
 
@@ -207,7 +216,9 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 poi.setTitle(pointOfInterest.name);
 
                 String address = ctrl.getAddressFromLatLng(pointOfInterest.latLng, geocoder);
-
+                if (address == null){
+                    address = "";
+                }
                 poi.setSnippet(address);
 
                 drawMarker(poi, pointOfInterest.placeId);
@@ -225,15 +236,18 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
                 Marker mark = mMap.addMarker(new MarkerOptions().position(latLng));
                 lastMarker = mark;
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
                 String address = ctrl.getAddressFromLatLng(latLng, geocoder);
                 mark.setTitle(getResources().getString(R.string.markerSelected));
+                if (address == null){
+                    address = "";
+                }
                 mark.setSnippet(address);
 
                 drawMarker(mark, "-1");
 
                 mark.showInfoWindow();
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             }
         });
 
@@ -249,7 +263,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment newFragment = NewPlaceDialogFragment.newInstance(activity, activity.getCtrl(), activity.getCtrl().getModel().getTrip(), activity.getCtrl().getModel().getPlace());
+                DialogFragment newFragment = NewPlaceDialogFragment.newInstance(activity, activity.getCtrl(), activity.getCtrl().getModel().getTrip(), activity.getCtrl().getModel().getPlace(), marker);
                 newFragment.show(ft, "prueba");
             }
         });

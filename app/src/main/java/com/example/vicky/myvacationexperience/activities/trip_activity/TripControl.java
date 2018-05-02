@@ -61,13 +61,14 @@ public class TripControl implements View.OnClickListener{
         this.view = view;
     }
 
+    public void setTrip(Trip trip){
+        this.model.setTrip(trip);
+    }
+
     public void loadList(){
 
         Trip trip = (Trip) activity.getIntent().getSerializableExtra("Trip");
         model.setTrip(trip);
-
-        Log.d("tripLayer", trip.getName()+" - "+trip.getLayers().toString());
-
 
         if (trip.getLayers().isEmpty()){
             view.showMessage();

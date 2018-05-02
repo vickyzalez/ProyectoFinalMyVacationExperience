@@ -77,7 +77,7 @@ public class PlacesControl implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnAddPlace:
-                //Para poder mostrar el popup
+                /*/Para poder mostrar el popup
                 // DialogFragment.show() will take care of adding the fragment
                 // in a transaction.  We also want to remove any currently showing
                 // dialog, so make our own transaction and take care of that here.
@@ -90,7 +90,7 @@ public class PlacesControl implements View.OnClickListener{
 
                 // Create and show the dialog.
                 DialogFragment newFragment = NewPlaceDialogFragment.newInstance(activity, this, model.getTrip(), model.getPlace());
-                newFragment.show(ft, "prueba");
+                newFragment.show(ft, "prueba");*/
                 break;
 
             default:
@@ -131,18 +131,21 @@ public class PlacesControl implements View.OnClickListener{
     }
 
     public void markersZoom(ArrayList<MarkerOptions> markers, GoogleMap mMap) {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (MarkerOptions mark : markers) {
-            builder.include(mark.getPosition());
+        if (markers.size() != 0) {
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+            for (MarkerOptions mark : markers) {
+                builder.include(mark.getPosition());
+            }
+            LatLngBounds bounds = builder.build();
+
+            int width = activity.getResources().getDisplayMetrics().widthPixels;
+            int height = activity.getResources().getDisplayMetrics().heightPixels;
+            int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
+
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+            mMap.animateCamera(cu);
         }
-        LatLngBounds bounds = builder.build();
-
-        int width = activity.getResources().getDisplayMetrics().widthPixels;
-        int height = activity.getResources().getDisplayMetrics().heightPixels;
-        int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
-
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
-        mMap.animateCamera(cu);
     }
 
     public String getAddressFromLatLng(LatLng latLng, Geocoder geocoder) {
