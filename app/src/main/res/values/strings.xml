@@ -26,6 +26,7 @@
     <string name="newplacename">Nombre del lugar</string>
     <string name="markerSelected">Nuevo lugar</string>
     <string name="noLayersMap">Creá al menos una categoría antes de buscar lugares a agregar</string>
+    <string name="layerVisible">La categoría seleccionada está oculta. Para ver el nuevo punto en el mapa, activala desde la pantalla anterior</string>
     />
 
 </resources>

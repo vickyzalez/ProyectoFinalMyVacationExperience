@@ -97,6 +97,13 @@ public class TripView extends RecyclerView.Adapter<ItemLayerViewHolder> {
                 this.isFirstDeletion = false;
             }
 
+            //ocultar los places
+            if (holder.getChkVisible().isChecked()){
+                holder.getExpandable().setVisibility(View.VISIBLE);
+            } else {
+                holder.getExpandable().setVisibility(View.GONE);
+            }
+
 
         }
         @Override

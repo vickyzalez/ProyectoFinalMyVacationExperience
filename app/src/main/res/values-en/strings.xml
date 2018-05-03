@@ -26,4 +26,5 @@
     <string name="newplacename" >Place name</string>
     <string name="markerSelected">New place</string>
     <string name="noLayersMap">Create at least one category before searching for any places to add</string>
+    <string name="layerVisible">"The selected category is hidden. To see the new place on map, enable it on previous screen. "</string>
 </resources>

@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.vicky.myvacationexperience.R;
 import com.example.vicky.myvacationexperience.activities.place_activity.PlacesActivity;
@@ -36,10 +39,9 @@ import java.util.List;
  * Created by Vicky on 11/2/2018.
  */
 
-public class NewPlaceDialogFragment extends DialogFragment implements View.OnClickListener, DialogInterface.OnClickListener{
+public class NewPlaceDialogFragment extends DialogFragment implements View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private EditText placeName;
-    private Spinner spinner;
 
     private Button btnCancel;
     private Button btnOk;
@@ -51,8 +53,12 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
     private static Trip tripSelected;
     private static Place placeSelected;
 
+    private Spinner spinner;
     private static String[] layers;
     private static Marker markerSelected;
+
+    private static String layerSelected;
+    private Boolean layerVisibility;
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
@@ -88,8 +94,9 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
         View v = inflater.inflate(R.layout.newplace_dialog, container, false);
 
         this.placeName = v.findViewById(R.id.txtPlaceName);
-        //this.spinner = v.findViewById(R.id.spinner);
-        //spinner.setOnItemSelectedListener(this);
+        this.spinner = v.findViewById(R.id.spinnerLayers);
+        spinner.setOnItemSelectedListener(this);
+        this.initCustomListSpinner();
 
         this.btnOk = v.findViewById(R.id.btnNewPlaceOk);
         this.btnCancel = v.findViewById(R.id.btnNewPlaceCancel);
@@ -106,6 +113,24 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
 
     }
 
+    private void initCustomListSpinner() {
+
+        // Custom choices
+        List<CharSequence> choices = new ArrayList<CharSequence>();
+        for (String layer: layers){
+            choices.add(layer.toString());
+        }
+
+        // Create an ArrayAdapter with custom choices
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(activity, android.R.layout.simple_spinner_item, choices);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set the adapter to th spinner
+        spinner.setAdapter(adapter);
+    }
+
     @Override //click normal
     public void onClick(View view) {
 
@@ -119,9 +144,9 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
 
                 for (LayerTrip layerTrip: tripSelected.getLayers()){
                     //TODO consulta por la categoria seleccionada. Falta Spinner
-                    if (layerTrip.getName().toString().equals("capita")){
+                    if (layerTrip.getName().toString().equals(layerSelected)){
                         placeSelected.setName(placeName.getText().toString());
-
+                        layerVisibility = layerTrip.getVisible();
                         layerTrip.getPlaces().add(placeSelected);
                         break;
                     }
@@ -130,6 +155,10 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
                 try {
                     FileHandler.saveTrip(tripSelected, activity);
                     onMapReadyCallback.onMapReady(activity.getmMap());
+                    if (!layerVisibility){
+                        Toast.makeText(activity, getResources().getString(R.string.layerVisible), Toast.LENGTH_LONG).show();
+
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -149,4 +178,13 @@ public class NewPlaceDialogFragment extends DialogFragment implements View.OnCli
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        layerSelected = spinner.getSelectedItem().toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

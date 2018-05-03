@@ -114,7 +114,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
                 selectedMarker.setSnippet(place.getAddress().toString());
 
                 drawMarker(selectedMarker, place.getId());
-
+                
                 selectedMarker.showInfoWindow();
 
             }

@@ -134,6 +134,7 @@ public class TripControl implements View.OnClickListener{
                         try {
                             FileHandler.saveTrip(model.getTrip(), activity);
                             updateList(layer, positionLayer);
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {
