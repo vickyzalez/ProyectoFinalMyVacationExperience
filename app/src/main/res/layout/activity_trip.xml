@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.vicky.myvacationexperience.activities.trip_activity.TripActivity">
+    tools:context="com.wikitude.sdksamples.activities.trip_activity.TripActivity">
 
     <!--Button
         android:id="@+id/btnNewLayer"

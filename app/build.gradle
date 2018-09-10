@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.vicky.myvacationexperience"
+        applicationId "com.wikitude.sdksamples"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
@@ -20,6 +20,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation(name: 'wikitudesdk', ext: 'aar')
+    implementation 'com.google.ar:core:1.1.0'
+
+    //implementation "com.android.support:appcompat-v7:$commonSupportLibVersion"
+    //implementation "com.android.support:design:$commonSupportLibVersion"
+    //implementation "com.android.support:support-v4:$commonSupportLibVersion"
+
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:design:26.1.0'
@@ -32,5 +40,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:11.8.0'
     implementation 'com.google.android.gms:play-services-nearby:11.8.0'
 
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
 
+    }
 }

@@ -6,7 +6,7 @@
     android:clickable="true"
     android:orientation="vertical"
     android:paddingLeft="30dp"
-    tools:context=".activities.trip_activity.TripActivity">
+    tools:context="com.wikitude.sdksamples.activities.trip_activity.TripActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.vicky.myvacationexperience.activities.trip_list_activity.TripListActivity">
+    tools:context="com.wikitude.sdksamples.activities.trip_list_activity.TripListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/trips"

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.vicky.myvacationexperience.activities.trip_activity.TripActivity">
+    tools:context="com.wikitude.sdksamples.activities.trip_activity.TripActivity">
     <item
         android:id="@+id/actionMap"
         android:icon="@drawable/icecream"
