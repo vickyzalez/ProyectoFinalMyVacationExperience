@@ -1,0 +1,23 @@
+[
+    {
+        "category_name": "Browsing Pois",
+        "samples": [
+
+            {
+                "required_extensions": [
+                    "native_detail",
+                    "geo"
+                ],
+                "name": "Native Detail Screen",
+                "path": "10_BrowsingPois_5_NativeDetailScreen/index.html",
+                "requiredFeatures": [
+                    "geo"
+                ],
+                "startupConfiguration": {
+                    "camera_resolution": "auto",
+                    "camera_position": "back"
+                }
+            }
+        ]
+    }
+]

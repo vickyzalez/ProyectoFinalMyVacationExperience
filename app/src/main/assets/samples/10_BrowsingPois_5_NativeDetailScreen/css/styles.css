@@ -1,0 +1,51 @@
+/* position of POI-radar*/
+
+.radarContainer_left {
+	position:absolute;
+	bottom:35px;
+	left:0px;
+	width:100px;
+	height:100px;
+}
+
+.radarContainer_right {
+	position:absolute;
+	bottom:35px;
+	right:0px;
+	width:100px;
+	height:100px;
+}
+
+.header-options {
+    background-color:rgba(0, 0, 0, 0.5);
+}
+
+
+.fondo-filtro{
+    background-color: #e7e7e7;
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.4);
+    width: 100%;
+}
+
+.filtro-opcion {
+    background-color: #e7e7e7;
+    width: 14.1%;
+      display: inline-block;
+    color: black;
+    padding: 4% 2.3%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+    cursor: pointer;
+
+}
+
+.filtro-activado {
+    background-color: #c4c4c4;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.4);
+}
+
+.filtro-desactivado {
+    background-color: #e7e7e7;
+}
