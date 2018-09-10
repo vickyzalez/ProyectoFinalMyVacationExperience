@@ -1,13 +1,16 @@
 package com.wikitude.sdksamples.activities.place_activity;
 
+import android.Manifest;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class PlacesActivity extends AppCompatActivity implements OnConnectionFailedListener, OnMapReadyCallback{
+public class PlacesActivity extends AppCompatActivity implements OnConnectionFailedListener, OnMapReadyCallback {
 
     private GoogleApiClient mGoogleApiClient;
     private PlacesControl ctrl;
@@ -74,7 +77,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
         setContentView(R.layout.map_layout);
 
         PlacesModel model = new PlacesModel();
-        PlacesControl control = new PlacesControl(this,model);
+        PlacesControl control = new PlacesControl(this, model);
         PlacesView view = new PlacesView(control, this);
         control.setView(view);
         control.loadTrip();
@@ -140,8 +143,8 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 this.setResultToPreviousActivity();
                 this.finish();
@@ -154,12 +157,12 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         this.setResultToPreviousActivity();
         super.onBackPressed();
     }
 
-    private void setResultToPreviousActivity(){
+    private void setResultToPreviousActivity() {
         Intent intent = new Intent();
         intent.putExtra("Trip", ctrl.getModel().getTrip());
         this.setResult(1, intent);
@@ -185,6 +188,17 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
         ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
 
         ctrl.loadPlaces(markers, mMap);
@@ -193,7 +207,7 @@ public class PlacesActivity extends AppCompatActivity implements OnConnectionFai
 
         final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
-        //TODO cuando toco el place desde el listado
+        //cuando toco un place en el listado
         ctrl.loadPlaceSelected();
         final com.wikitude.sdksamples.entities.Place placeSelected = ctrl.getModel().getPlaceSelected();
         if (placeSelected != null){
