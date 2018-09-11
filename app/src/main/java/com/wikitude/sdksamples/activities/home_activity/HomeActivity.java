@@ -73,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
 
         final SamplesExpendableListAdapter adapter = new SamplesExpendableListAdapter(this, categories);
 
+
         //final Toolbar toolbar = findViewById(com.wikitude.sdksamples.R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -100,17 +101,17 @@ public class HomeActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.wikitude.sdksamples.R.menu.main_menu, menu);
         return true;
-    }
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         ArchitectView.getPermissionManager().onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
+/*
 
     public void launchCustomUrl(MenuItem item) {
         final Intent intent = new Intent(this, UrlLauncherStorageActivity.class);
@@ -129,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
                 )
                 .show();
     }
-
+*/
     /*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){

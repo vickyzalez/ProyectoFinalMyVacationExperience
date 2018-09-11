@@ -8,8 +8,10 @@ import com.wikitude.sdksamples.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -102,6 +104,10 @@ public class SimpleArActivity extends AppCompatActivity {
         architectView.onCreate(config); // create ArchitectView with configuration
 
         setContentView(architectView);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setTitle("My Vacation Experience");
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -124,6 +130,17 @@ public class SimpleArActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            default:
+                return false;
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();

@@ -8,6 +8,8 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 /**
@@ -55,6 +57,21 @@ public class SimpleGeoArActivity extends SimpleArActivity implements LocationLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationProvider = new LocationProvider(this, this, errorCallback);
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setTitle("My Vacation Experience");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            default:
+                return false;
+        }
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -72,19 +73,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button = findViewById(R.id.btnWikitude);
         button.setOnClickListener(this);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setTitle("My Vacation Experience");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        /*final Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
+    }*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -93,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void launchCustomUrl(MenuItem item) {
+    /*public void launchCustomUrl(MenuItem item) {
         final Intent intent = new Intent(this, UrlLauncherStorageActivity.class);
         startActivity(intent);
     }
@@ -109,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         getString(R.string.build_information_version) + ArchitectView.getSDKVersion()
                 )
                 .show();
-    }
+    }*/
 
     @Override
     public void onClick(View v) {

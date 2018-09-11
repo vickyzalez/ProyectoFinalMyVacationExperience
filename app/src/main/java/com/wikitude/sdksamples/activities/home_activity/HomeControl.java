@@ -3,6 +3,7 @@ package com.wikitude.sdksamples.activities.home_activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -84,7 +85,6 @@ public class HomeControl implements View.OnClickListener{
                         alert.show();
                     }
                 });
-
 
                 break;
 
