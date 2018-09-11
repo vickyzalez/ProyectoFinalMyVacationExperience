@@ -27,7 +27,10 @@
     <string name="markerSelected">Nuevo lugar</string>
     <string name="noLayersMap">Creá al menos una categoría antes de buscar lugares a agregar</string>
     <string name="layerVisible">La categoría seleccionada está oculta. Para ver el nuevo punto en el mapa, activala desde la pantalla anterior</string>
-    />
+    <string name="errorTitle">Encontramos un error</string>
+    <string name="emptyFieldsMsg">Se deben completar todos los campos para continuar</string>
+    <string name="wrongDate">La fecha desde no puede ser mayor a la fecha hasta</string>
+
 
     <string name="menu_main_launch_url">Custom URL Launcher</string>
     <string name="menu_main_show_sdk_info">SDK Build Information</string>

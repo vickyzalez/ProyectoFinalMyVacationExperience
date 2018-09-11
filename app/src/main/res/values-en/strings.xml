@@ -27,4 +27,7 @@
     <string name="markerSelected">New place</string>
     <string name="noLayersMap">Create at least one category before searching for any places to add</string>
     <string name="layerVisible">"The selected category is hidden. To see the new place on map, enable it on previous screen. "</string>
+    <string name="errorTitle">We found an error</string>
+    <string name="emptyFieldsMsg">You must fill all fields to continue</string>
+    <string name="wrongDate">From date cannot be after To date</string>
 </resources>

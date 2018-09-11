@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,62 +110,131 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
 
             case R.id.btnNewTripOk:
 
-                if (tripModify == null){
-                    //buscamos el id que tendra el nuevo Trip
-                        Integer idTrip = 0;
-                    try {
-                        idTrip = FileHandler.getIdNextTrip(activity);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+               if(emptyFields()){
+
+                   new AlertDialog.Builder(activity)
+                           .setTitle(R.string.errorTitle)
+                           .setMessage(R.string.emptyFieldsMsg)
+                           .setIcon(android.R.drawable.ic_dialog_alert)
+                           .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
+                               public void onClick(DialogInterface dialog, int whichButton) {}})
+                           .show();
+               } else {
+
+                   if(wrongDate()){
+                       new AlertDialog.Builder(activity)
+                               .setTitle(R.string.errorTitle)
+                               .setMessage(R.string.wrongDate)
+                               .setIcon(android.R.drawable.ic_dialog_alert)
+                               .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
+                                   public void onClick(DialogInterface dialog, int whichButton) {}})
+                               .show();
+
+                   } else {
+
+                    if (tripModify == null){
+                        //buscamos el id que tendra el nuevo Trip
+                            Integer idTrip = 0;
+                        try {
+                            idTrip = FileHandler.getIdNextTrip(activity);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        //creamos el objeto
+                        Trip trip = new Trip(idTrip,
+                                this.tripName.getText().toString(),
+                                this.tripFrom.getText().toString(),
+                                this.tripTo.getText().toString(), "");
+
+                        //se guarda en el celu
+                        try {
+                            FileHandler.saveTrip(trip, activity);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        //Actualiza activity
+                        control.updateList(trip, null);
+
+                        //Vas a la otra activity pasando el trip
+                        Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
+                        intent.putExtra("Trip", trip);
+                        activity.startActivityForResult(intent, 1);
+
+                    } else {
+
+                        tripModify.setName(this.tripName.getText().toString());
+                        tripModify.setFromDate(this.tripFrom.getText().toString());
+                        tripModify.setToDate(this.tripTo.getText().toString());
+
+                        //se guarda en el celu
+                        try {
+                            FileHandler.saveTrip(tripModify, activity);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        //Actualiza activity
+                        control.updateList(tripModify, tripModify.getId());
                     }
 
-                    //creamos el objeto
-                    Trip trip = new Trip(idTrip,
-                            this.tripName.getText().toString(),
-                            this.tripFrom.getText().toString(),
-                            this.tripTo.getText().toString(), "");
-
-                    //TODO implementar el llamado a la API que devuelva la fotito
-
-                    //se guarda en el celu
-                    try {
-                        FileHandler.saveTrip(trip, activity);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    //Actualiza activity
-                    control.updateList(trip, null);
-
-                    //Vas a la otra activity pasando el trip
-                    Intent intent = new Intent(activity.getApplicationContext(), TripActivity.class);
-                    intent.putExtra("Trip", trip);
-                    activity.startActivityForResult(intent, 1);
-
-                } else {
-
-                    tripModify.setName(this.tripName.getText().toString());
-                    tripModify.setFromDate(this.tripFrom.getText().toString());
-                    tripModify.setToDate(this.tripTo.getText().toString());
-
-                    //se guarda en el celu
-                    try {
-                        FileHandler.saveTrip(tripModify, activity);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    //Actualiza activity
-                    control.updateList(tripModify, tripModify.getId());
+                    this.dismiss();
+                    break;
                 }
-
-                this.dismiss();
-                break;
+           }
         }
+    }
+
+    private boolean wrongDate() {
+        String fromPath = this.tripFrom.getText().toString();
+        String from[] = fromPath.split("/");
+
+        String toPath = this.tripTo.getText().toString();
+        String to[] = toPath.split("/");
+
+        Integer toDay = Integer.parseInt(to[0]);
+        Integer toMonth = Integer.parseInt(to[1]);
+        Integer toYear = Integer.parseInt(to[2]);
+        Integer fromDay = Integer.parseInt(from[0]);
+        Integer fromMonth = Integer.parseInt(from[1]);
+        Integer fromYear = Integer.parseInt(from[2]);
+
+        if(fromYear.equals(toYear)){
+            if(fromMonth.equals(toMonth)){
+                if(fromDay.equals(toDay)){
+                    return false;
+                } else {
+                    if (fromDay > toDay){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            } else {
+                if (fromMonth > toMonth){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            if (fromYear > toYear){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private boolean emptyFields() {
+        return this.tripName.getText().toString().equals("") ||
+                this.tripFrom.getText().toString().equals("")||
+                this.tripTo.getText().toString().equals("");
     }
 
     private void showDatePicker() {
