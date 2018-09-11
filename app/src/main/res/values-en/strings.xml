@@ -30,4 +30,5 @@
     <string name="errorTitle">We found an error</string>
     <string name="emptyFieldsMsg">You must fill all fields to continue</string>
     <string name="wrongDate">From date cannot be after To date</string>
+    <string name="duplicatedLayer">You already created a category with that name</string>
 </resources>

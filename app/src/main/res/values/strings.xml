@@ -30,6 +30,7 @@
     <string name="errorTitle">Encontramos un error</string>
     <string name="emptyFieldsMsg">Se deben completar todos los campos para continuar</string>
     <string name="wrongDate">La fecha desde no puede ser mayor a la fecha hasta</string>
+    <string name="duplicatedLayer">Ya existe una categoría con ese nombre</string>
 
 
     <string name="menu_main_launch_url">Custom URL Launcher</string>
