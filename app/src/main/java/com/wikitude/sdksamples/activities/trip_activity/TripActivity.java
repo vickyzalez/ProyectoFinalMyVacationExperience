@@ -1,6 +1,7 @@
 package com.wikitude.sdksamples.activities.trip_activity;
 
 import android.content.Intent;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,13 +72,21 @@ public class TripActivity extends AppCompatActivity {
 
             case R.id.actionMap:
 
-                if (ctrl.getLayers().size() == 0){
-                    Toast toast = Toast.makeText(this, R.string.noLayersMap, Toast.LENGTH_LONG);
-                    toast.show();
+                LocationManager lm = (LocationManager)this.getSystemService(this.LOCATION_SERVICE);
+
+                if(lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+
+                    if (ctrl.getLayers().size() == 0){
+                        Toast toast = Toast.makeText(this, R.string.noLayersMap, Toast.LENGTH_LONG);
+                        toast.show();
+                    } else {
+                        Intent intent = new Intent(this.getApplicationContext(), PlacesActivity.class);
+                        intent.putExtra("Trip", this.ctrl.getTrip());
+                        this.startActivityForResult(intent, 1);
+                    }
                 } else {
-                    Intent intent = new Intent(this.getApplicationContext(), PlacesActivity.class);
-                    intent.putExtra("Trip", this.ctrl.getTrip());
-                    this.startActivityForResult(intent, 1);
+                    Toast toast = Toast.makeText(this, R.string.gpsMap, Toast.LENGTH_LONG);
+                    toast.show();
                 }
                 return true;
 

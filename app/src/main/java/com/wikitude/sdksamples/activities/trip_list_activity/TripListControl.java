@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -42,16 +43,75 @@ public class TripListControl implements View.OnClickListener{
     }
 
     public void loadList() throws IOException, JSONException {
-
-
+        
         List<Trip> tripsMobile = new ArrayList<Trip>();
 
         tripsMobile = FileHandler.getTripsToView(this.activity);
-        //Log.d("TripsMobile", tripsMobile.get(tripsMobile.size()-1).getLayers().toString());
-        model.setTrips(tripsMobile);
+
+        List<Trip> soonerFirst = soonerTripFirst(tripsMobile);
+
+        model.setTrips(soonerFirst);
 
         if (tripsMobile.isEmpty()){
             view.showMessage();
+        }
+    }
+
+    private List<Trip> soonerTripFirst(List<Trip> tripsMobile) {
+
+        for (int x = 0; x < tripsMobile.size(); x++) {
+
+            for (int i = 0; i < tripsMobile.size()-x-1; i++) {
+
+                if(!dateFirst(tripsMobile.get(i).getFromDate(), tripsMobile.get(i+1).getFromDate())){
+
+                    Trip tmp = tripsMobile.get(i+1);
+                    tripsMobile.set(i+1, tripsMobile.get(i));
+                    tripsMobile.set(i, tmp);
+
+                }
+            }
+        }
+
+        return tripsMobile;
+    }
+
+    private boolean dateFirst(String date1, String date2) {
+        String one[] = date1.split("/");
+
+        String two[] = date2.split("/");
+
+        Integer minDay = Integer.parseInt(one[0]);
+        Integer minMonth = Integer.parseInt(one[1]);
+        Integer minYear = Integer.parseInt(one[2]);
+        Integer maxDay = Integer.parseInt(two[0]);
+        Integer maxMonth = Integer.parseInt(two[1]);
+        Integer maxYear = Integer.parseInt(two[2]);
+
+        if(minYear.equals(maxYear)){
+            if(minMonth.equals(maxMonth)){
+                if(minDay.equals(maxDay)){
+                    return false;
+                } else {
+                    if (minDay > maxDay){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            } else {
+                if (minMonth > maxMonth){
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        } else {
+            if (minYear > maxYear){
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 
