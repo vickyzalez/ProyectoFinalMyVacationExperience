@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/markerName"
@@ -16,6 +16,7 @@
         android:layout_marginTop="8dp"
         android:text="New York City Cake dylan's new york love love love"
         android:textAlignment="textStart"
+        android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintBottom_toTopOf="@+id/markerAddress"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +45,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="22dp"
         android:layout_marginTop="72dp"
+        android:layout_marginBottom="5dp"
         android:background="?android:selectableItemBackground"
+        android:tint="@color/VickyCelesteOscuroBoton"
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

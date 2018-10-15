@@ -109,97 +109,97 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
 
             case R.id.iconBakery:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.bakery);
                 break;
 
             case R.id.iconBar:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.bar);
                 break;
 
             case R.id.iconBuilding:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.building);
                 break;
 
             case R.id.iconCamera:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.camera);
                 break;
 
             case R.id.iconCoffee:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.coffee);
                 break;
 
             case R.id.iconFastFood:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.fastfood);
                 break;
 
             case R.id.iconFun:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.fun);
                 break;
 
             case R.id.iconHome:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.home);
                 break;
 
             case R.id.iconIceCream:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.icecream);
                 break;
 
             case R.id.iconLocation:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.location);
                 break;
 
             case R.id.iconMarket:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.market);
                 break;
 
             case R.id.iconMusic:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.music);
                 break;
 
             case R.id.iconRestaurant:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.restaurant);
                 break;
 
             case R.id.iconShopping:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.shopping);
                 break;
 
             case R.id.iconStar:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.star);
                 break;
 
             case R.id.iconTransit:
                 changeBackground();
-                view.setBackgroundColor(getResources().getColor(R.color.buttonSelected));
+                view.setBackgroundColor(getResources().getColor(R.color.VickyCelesteClaroBoton));
                 this.icon = (R.drawable.transit);
                 break;
 
@@ -219,7 +219,8 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
                             .show();
                 } else {
 
-                    if(duplicatedLayer()){
+                    //Logica para repetidos
+                    /*if(duplicatedLayer()){
                         new AlertDialog.Builder(activity)
                                 .setTitle(R.string.errorTitle)
                                 .setMessage(R.string.duplicatedLayer)
@@ -228,7 +229,7 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
                                     public void onClick(DialogInterface dialog, int whichButton) {}})
                                 .show();
 
-                    } else {
+                    } else {*/
 
                         if (layerModify == null){
 
@@ -285,7 +286,7 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
 
                 this.dismiss();
                 break;
-            }
+            //}
         }
     }
 

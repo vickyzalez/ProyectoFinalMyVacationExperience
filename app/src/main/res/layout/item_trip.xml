@@ -14,13 +14,18 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        cardview:contentPadding="2dp"
+        cardview:cardUseCompatPadding="true"
         cardview:cardBackgroundColor="@android:color/transparent"
-        cardview:cardElevation="1dp">
+        cardview:cardElevation="3dp">
         <RelativeLayout
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
 
             <TextView
                 android:id="@+id/txtLayerName"
@@ -30,6 +35,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="21dp"
                 android:text="Trip Name"
+                android:textColor="@color/VickytextBlack"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -38,6 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtLayerName"
                 android:layout_centerHorizontal="true"
+                android:padding="2dp"
+                android:paddingTop="3dp"
                 android:text="Date From"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -49,6 +58,8 @@
                 android:layout_alignBottom="@+id/txtDateFrom"
                 android:layout_toEndOf="@+id/txtSlash"
                 android:layout_marginStart="10dp"
+                android:padding="2dp"
+                android:paddingTop="3dp"
                 android:text="Date to"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -60,6 +71,8 @@
                 android:layout_alignBottom="@+id/txtDateFrom"
                 android:layout_toEndOf="@+id/txtDateFrom"
                 android:layout_marginStart="10dp"
+                android:padding="2dp"
+                android:paddingTop="3dp"
                 android:text="-"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
