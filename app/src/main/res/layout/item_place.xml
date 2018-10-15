@@ -5,7 +5,7 @@
     android:layout_height="48dp"
     android:clickable="true"
     android:orientation="vertical"
-    android:paddingLeft="30dp"
+    android:paddingLeft="10dp"
     tools:context="com.wikitude.sdksamples.activities.trip_activity.TripActivity">
 
     <RelativeLayout
@@ -24,12 +24,13 @@
 
         <ImageButton
             android:id="@+id/btnDeletePlace"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="14dp"
             android:background="?android:selectableItemBackground"
-            android:src="@android:drawable/ic_delete" />
+            android:src="@android:drawable/ic_delete"
+            android:tint="@color/VickytextBlack"/>
     </RelativeLayout>
 </LinearLayout>

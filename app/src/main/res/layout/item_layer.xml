@@ -18,6 +18,8 @@
         cardview:cardElevation="1dp">
         <RelativeLayout
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -31,6 +33,8 @@
                 android:layout_toEndOf="@+id/iconLayer"
                 android:paddingTop="4dp"
                 android:text="Layer Name"
+                android:textColor="@color/VickytextBlack"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -72,12 +76,18 @@
                 android:id="@+id/txtExpandable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtLayerName"
-                android:layout_toEndOf="@+id/iconLayer"
-                android:textSize="18dp"
-                android:paddingTop="8dp"
+                android:layout_below="@+id/iconLayer"
+                android:layout_marginStart="11dp"
+                android:layout_toEndOf="@+id/txtPosition"
+                android:drawableLeft="@android:drawable/arrow_down_float"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/VickytextBlack"
                 android:paddingBottom="5dp"
-                android:text="TextView" />
+                android:paddingTop="8dp"
+                android:textColor="@color/VickytextBlack"
+                android:textStyle="normal"
+                android:text="TextView"
+                android:textSize="18dp" />
 
             <com.wikitude.sdksamples.utilities.ExpandedListView
                 android:id="@+id/listExpandable"

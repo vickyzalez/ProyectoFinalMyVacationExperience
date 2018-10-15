@@ -92,7 +92,7 @@ public class HomeControl implements View.OnClickListener{
                     });
 
                 } else {
-                    
+
                     Toast toast = Toast.makeText(activity, R.string.gpsMap, Toast.LENGTH_LONG);
                     toast.show();
                 }

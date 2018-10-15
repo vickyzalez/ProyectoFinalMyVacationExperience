@@ -37,6 +37,7 @@
         android:layout_marginRight="16dp"
         android:scaleType="center"
         android:onClick="addUrl"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:tint="@color/VickyBlanco"/>
 
 </android.support.design.widget.CoordinatorLayout>
