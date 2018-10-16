@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -64,6 +65,9 @@
         android:layout_marginEnd="11dp"
         android:layout_marginTop="24dp"
         android:layout_toStartOf="@+id/btnNewTripOk"
+        android:background="@android:color/transparent"
+        android:textStyle="normal"
+        android:textAlignment="center"
         android:text="@string/btnCancel" />
 
     <Button
@@ -74,5 +78,9 @@
         android:layout_alignBottom="@+id/btnNewTripCancel"
         android:layout_alignEnd="@+id/editToTrip"
         android:layout_marginEnd="13dp"
+        android:background="@color/VickyCelesteOscuroBoton"
+        android:textStyle="normal"
+        android:textAlignment="center"
+        android:textColor="@color/VickyBlanco"
         android:text="@string/btnOk" />
 </RelativeLayout>

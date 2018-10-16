@@ -188,7 +188,6 @@ public class TripListControl implements View.OnClickListener{
                             new AlertDialog.Builder(act)
                                     .setTitle(R.string.popupConfirmTitle)
                                     .setMessage(R.string.popupConfirm)
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
                                     .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
 
                                         public void onClick(DialogInterface dialog, int whichButton) {

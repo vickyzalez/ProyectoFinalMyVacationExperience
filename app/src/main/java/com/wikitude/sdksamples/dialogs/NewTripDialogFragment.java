@@ -115,7 +115,6 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
                    new AlertDialog.Builder(activity)
                            .setTitle(R.string.errorTitle)
                            .setMessage(R.string.emptyFieldsMsg)
-                           .setIcon(android.R.drawable.ic_dialog_alert)
                            .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
                                public void onClick(DialogInterface dialog, int whichButton) {}})
                            .show();
@@ -125,7 +124,6 @@ public class NewTripDialogFragment extends DialogFragment implements View.OnClic
                        new AlertDialog.Builder(activity)
                                .setTitle(R.string.errorTitle)
                                .setMessage(R.string.wrongDate)
-                               .setIcon(android.R.drawable.ic_dialog_alert)
                                .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
                                    public void onClick(DialogInterface dialog, int whichButton) {}})
                                .show();

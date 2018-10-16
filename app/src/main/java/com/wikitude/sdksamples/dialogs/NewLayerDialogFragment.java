@@ -213,7 +213,6 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
                     new AlertDialog.Builder(activity)
                             .setTitle(R.string.errorTitle)
                             .setMessage(R.string.emptyFieldsMsg)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {}})
                             .show();

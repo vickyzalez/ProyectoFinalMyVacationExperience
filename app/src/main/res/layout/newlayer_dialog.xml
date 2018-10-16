@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     android:id="@+id/viewIdRelative">
 
     <EditText
@@ -48,14 +49,14 @@
         android:id="@+id/iconRestaurant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/btnNewLayerCancel"
         android:layout_alignEnd="@+id/btnNewLayerCancel"
-        android:layout_alignTop="@+id/iconShopping"
         android:background="@null"
-        android:paddingRight="2dp"
-        android:paddingTop="2dp"
+        android:gravity="center_horizontal"
         android:paddingBottom="2dp"
         android:paddingLeft="2dp"
-        android:gravity="center_horizontal"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
         android:src="@drawable/restaurant" />
 
     <ImageButton
@@ -249,12 +250,15 @@
 
     <Button
         android:id="@+id/btnNewLayerCancel"
-        android:layout_width="wrap_content"
+        android:layout_width="95dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/iconShopping"
         android:layout_marginTop="159dp"
-        android:text="@string/btnCancel" />
+        android:background="@android:color/transparent"
+        android:textStyle="normal"
+        android:textAlignment="center"
+        android:text="@string/btnCancel"/>
 
     <Button
         android:id="@+id/btnNewLayerOk"
@@ -264,5 +268,9 @@
         android:layout_alignBottom="@+id/btnNewLayerCancel"
         android:layout_alignEnd="@+id/editNameLayer"
         android:layout_marginEnd="13dp"
+        android:background="@color/VickyCelesteOscuroBoton"
+        android:textStyle="normal"
+        android:textAlignment="center"
+        android:textColor="@color/VickyBlanco"
         android:text="@string/btnOk" />
 </RelativeLayout>
