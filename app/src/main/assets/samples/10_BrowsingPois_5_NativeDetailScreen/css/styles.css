@@ -49,3 +49,58 @@
 .filtro-desactivado {
     background-color: #e7e7e7;
 }
+
+.rounded-button{
+    background-color: #FFCE07;
+}
+
+
+
+#header-status{
+    position:fixed;
+    top: 0;
+}
+
+
+.setting-link{
+    background: url(../assets/gear.png) center center no-repeat;
+    background-size: 25px 25px;
+}
+
+.position-link{
+    background: url(../assets/refresh.png) center center no-repeat;
+    background-size: 25px 25px;
+    margin-left: 10px;
+    margin-right: 2px;
+}
+
+.list-link{
+    background:url(../assets/list.png) center center no-repeat;
+    background-size: 25px 25px;
+    margin-right: 10px;
+}
+
+.back-link{
+    background:url(../assets/gear.png) center center no-repeat;
+    background-size: 25px 25px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    align: right;
+}
+
+.screen-buttons{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.rounded-button{
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: rgba(187, 187, 187, 0.5);
+}

@@ -46,12 +46,9 @@
             
             <!-- MAIN PAGE CONTENT -->
 
-            <!-- header of UI holding feature buttons -->
-            <div id ="header-status" data-role="header" data-position="fixed" data-theme="c">
-                <a href="javascript: World.showRange();" data-icon="gear" data-inline="true" data-mini="true">Range</a>
-                <a href="javascript: World.reloadPlaces()" data-icon="refresh" >Reload</a>
-                <h1></h1>
-            </div>
+            <!-- header of UI holding feature buttons
+            <div id ="header-status" data-role="header" data-position="fixed" data-theme="c"> -->
+
 
 
             <div class="fondo-filtro" onload="ponerTodos();">
@@ -71,22 +68,32 @@
                      <i class="fas fa-tree" style="align: center; font-size:125%;"></i>
                      <br/>Parques</div>
             </div>
-                 <h1></h1>
+                <!-- <h1></h1> -->
 
+         <div align="right">
 
+             <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal">
+                <a href="javascript: World.reloadPlaces()" class="rounded-button position-link"></a>
+             </div>
+             <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal">
+                 <a href="javascript: World.showPoiList()" class="rounded-button list-link"></a>
+             </div>
+             <h1></h1>
+         </div>
                   <!-- the radar div - Wikitude SDK radar will be drawn into this div -->
             <div class="radarContainer_left" id="radarContainer"></div>
 
             <!-- transparent footer -->
-            <div data-role="footer" class="ui-bar" data-theme="f" data-position="fixed" style="text-align:center;">
+            <!--<div data-role="footer" class="ui-bar" data-theme="f" data-position="fixed" style="text-align:center;">-->
+            <div class="ui-btn-right screen-buttons" data-role="controlgroup" data-type="horizontal">
 
-
-                <a style="text-align:right;" id="popupInfoButton" href="javascript: World.showPoiList()" data-rel="popup" data-role="button" class="ui-icon-alt" data-inline="true" data-transition="pop" data-icon="alert" data-theme="e" data-iconpos="notext">Log</a> </p>
-
+                <!--<a style="text-align:right;" id="popupInfoButton" href="javascript: World.showPoiList()" data-rel="popup" data-role="button" class="ui-icon-alt" data-inline="true" data-transition="pop" data-icon="alert" data-theme="e" data-iconpos="notext">Log</a> </p>
+                <a style="text-align:right;" id="popupInfoButton" href="javascript: World.showPoiList()" class="rounded-button list-link"></a>
+                    </p>
 
                 <div data-role="popup" id="popupInfo" class="ui-content" data-theme="e" style="max-width:350px;">
                   <p style="text-align:right;" id="status-message">Trying to find out where you are</p>
-                </div>
+                </div>-->
                 
             </div>
 
@@ -178,10 +185,15 @@
      <!-- Testing de Tabla para listado de pois -->
      <div id="poiList" style=" display: none; background-color: white">
 
-         <button onclick="World.hidePoiList();">
+         <!--<button onclick="World.hidePoiList();">
              <i class="fas fa-arrow-left"  style="align: center;"></i>
-         </button>
-
+         </button>-->
+         <div align="right" style="background-color:#e7e7e7">
+             <b>Listado de puntos de interés cercanos</b>
+             <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal">
+                 <a href="javascript: World.hidePoiList()" class="rounded-button back-link"></a>
+             </div>
+         </div>
          <table id="tablePois" border="1" style= "width: 100%">
 
          </table>
