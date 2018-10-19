@@ -471,12 +471,12 @@ var World = {
             var cellIcon = row.insertCell(0);
             var cellContent = row.insertCell(1);
 
-            cellIcon.innerHTML = "<img src='" + World.markerList[i].poiData.icon + "' width='60' height='60'>";
+            cellIcon.innerHTML = "<img src='" + World.markerList[i].poiData.icon + "' width='40' height='40' style='margin-left:15%' >";
 
             if(World.markerList[i].poiData.rating != undefined){
-            var HTML = "<div style='text-align: right;font-weight: bold'>"+World.markerList[i].poiData.title+"</div><div style='text-align: left'>"+World.markerList[i].poiData.description+"</div><div style='text-align: right'><i class='fas fa-star'></i> "+World.markerList[i].poiData.rating+"</div>";
+            var HTML = "<div style='text-align: right;font-weight: bold; margin-right:5%; margin-left:5%'>"+World.markerList[i].poiData.title+"</div><div style='text-align: left;margin-right:5%; margin-left:5%; margin-top:3% ; font-size: 14px'>"+World.markerList[i].poiData.description+"</div><div style='text-align: right; color:#086FA1; margin-right:5%; margin-left:5%; margin-bottom:3%'><i class='fas fa-star'></i> "+World.markerList[i].poiData.rating+"</div>";
             } else {
-            var HTML = "<div style='text-align: right;font-weight: bold'>"+World.markerList[i].poiData.title+"</div><div style='text-align: left'>"+World.markerList[i].poiData.description+"</div>";
+            var HTML = "<div style='text-align: right;font-weight: bold; margin-right:5%; margin-left:5%'>"+World.markerList[i].poiData.title+"</div><div style='text-align: left;margin-right:5%; margin-left:5%; margin-top:3% ; font-size: 14px'>"+World.markerList[i].poiData.description+"</div>";
             }
             cellContent.innerHTML = HTML;
 
