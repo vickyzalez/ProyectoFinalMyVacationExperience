@@ -70,12 +70,12 @@ public class HomeControl implements View.OnClickListener{
 
                         @Override
                         public void permissionsDenied(@NonNull String[] deniedPermissions) {
-                            Toast.makeText(activity, activity.getResources().getString(com.wikitude.sdksamples.R.string.permissions_denied) + Arrays.toString(deniedPermissions), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, activity.getResources().getString(com.wikitude.sdksamples.R.string.permissions_denied), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void showPermissionRationale(final int requestCode, @NonNull String[] strings) {
-                            final android.app.AlertDialog.Builder alertBuilder = new android.app.AlertDialog.Builder(activity);
+                           /* final android.app.AlertDialog.Builder alertBuilder = new android.app.AlertDialog.Builder(activity);
                             alertBuilder.setCancelable(true);
                             alertBuilder.setTitle(com.wikitude.sdksamples.R.string.permission_rationale_title);
                             alertBuilder.setMessage(activity.getResources().getString(com.wikitude.sdksamples.R.string.permission_rationale_text) + Arrays.toString(permissions));
@@ -87,7 +87,7 @@ public class HomeControl implements View.OnClickListener{
                             });
 
                             android.app.AlertDialog alert = alertBuilder.create();
-                            alert.show();
+                            alert.show();*/
                         }
                     });
 

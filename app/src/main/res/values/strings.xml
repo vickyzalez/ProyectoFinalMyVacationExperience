@@ -32,6 +32,7 @@
     <string name="wrongDate">La fecha desde no puede ser mayor a la fecha hasta</string>
     <string name="duplicatedLayer">Ya existe una categoría con ese nombre</string>
     <string name="gpsMap">Por favor habilitá el GPS para poder continuar</string>
+    <string name="mapAvailable">Genial! Ya podés ir al mapa para cargar lugares en tu nueva categoría</string>
 
 
 
@@ -39,8 +40,8 @@
     <string name="menu_main_show_sdk_info">SDK Build Information</string>
 
     <!-- Permission handling -->
-    <string name="permissions_denied">Necesitamos los siguientes permisos para brindarte la mejor experiencia:</string>
-    <string name="permission_rationale_text">Necesitamos los siguientes permisos para brindarte la mejor experiencia:</string>
+    <string name="permissions_denied">Necesitamos los permisos que te pedimos para poder continuar</string>
+    <string name="permission_rationale_text">Necesitamos los permisos que te pedimos para poder continuar</string>
     <string name="permission_rationale_title">Permisos</string>
 
     <!-- SDK build information -->

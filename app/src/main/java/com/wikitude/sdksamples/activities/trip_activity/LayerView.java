@@ -58,6 +58,8 @@ public class LayerView extends BaseAdapter {
 
         }
 
+    public LayerView(){}
+
     public void setLayer(LayerTrip layer) {
         this.layer = layer;
     }

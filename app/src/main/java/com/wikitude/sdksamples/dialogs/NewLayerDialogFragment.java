@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.wikitude.sdksamples.R;
 import com.wikitude.sdksamples.activities.trip_activity.LayerView;
@@ -46,6 +47,7 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
     private static LayerTrip layerModify;
     private static Trip tripModify;
     private static Integer positionLayer;
+    private Boolean emptyTrip = false;
 
     private RelativeLayout relative;
 
@@ -230,6 +232,10 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
 
                     } else {*/
 
+                    if (this.control.getTrip().getLayers().size() == 0){
+                        emptyTrip = true;
+                    }
+
                         if (layerModify == null){
 
                                 LayerTrip layer = new LayerTrip(this.layerName.getText().toString(),this.icon,true);
@@ -281,7 +287,14 @@ public class NewLayerDialogFragment extends DialogFragment implements View.OnCli
                                 //Actualiza activity
                                 control.updateList(layerModify, positionLayer);
                                 }
-                            }
+
+                    if (emptyTrip){
+                        Toast toast = Toast.makeText(activity, R.string.mapAvailable, Toast.LENGTH_LONG);
+                        toast.show();
+                        emptyTrip = false;
+                    }
+
+                }
 
                 this.dismiss();
                 break;

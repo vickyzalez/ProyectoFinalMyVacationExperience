@@ -32,4 +32,5 @@
     <string name="wrongDate">From date cannot be after To date</string>
     <string name="duplicatedLayer">You already created a category with that name</string>
     <string name="gpsMap">Please enable GPS access to continue</string>
+    <string name="mapAvailable">Awesome! Go to the Map to add places to your new category</string>
 </resources>
