@@ -9,6 +9,7 @@
         <item name="colorPrimary">@color/VickyCelesteClaroBoton</item>
         <item name="colorPrimaryDark">@color/VickyCelesteOscuro</item>
         <item name="colorAccent">@color/VickyCelesteOscuroBoton</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -28,6 +29,14 @@
     <style name="SpinnerDropDownItem">
         <item name="android:gravity">right|center_vertical</item>
         <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
 </resources>

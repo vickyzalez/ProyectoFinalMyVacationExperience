@@ -28,6 +28,7 @@ android:layout_height="match_parent">
             android:textStyle="bold"
             android:textAlignment="center"
             android:typeface="serif"
+            android:fontFamily="sans-serif"
             android:textColor="#EEFFFFFF"
             android:background="@android:color/transparent"
             android:text="@string/txtHome"/>
@@ -52,6 +53,7 @@ android:layout_height="match_parent">
                 android:textColor="@color/VickyCelesteOscuroBoton"
                 android:textSize="18sp"
                 android:textStyle="normal"
+                android:fontFamily="sans-serif"
                 android:typeface="monospace" />
 
         <Button
@@ -71,6 +73,7 @@ android:layout_height="match_parent">
                 android:textColor="@color/VickyCelesteOscuroBoton"
                 android:textSize="18sp"
                 android:textStyle="normal"
+                android:fontFamily="sans-serif"
                 android:typeface="monospace" />
 
     </RelativeLayout>
