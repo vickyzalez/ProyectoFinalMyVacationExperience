@@ -183,7 +183,7 @@ var World = {
 
 		console.log("HOLIS"+JSON.stringify(marker));
         //Se llama a la api de details por place_id
-        var jqxhr = $.getJSON("https://maps.googleapis.com/maps/api/place/details/json?placeid="+marker.poiData.placeID+"&key=AIzaSyAC05uwYBK-r3NF3rqzXPaa22uZPDz9JcU", function(data) {
+        var jqxhr = $.getJSON("https://maps.googleapis.com/maps/api/place/details/json?placeid="+marker.poiData.placeID+"&key=AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk", function(data) {
 
             if (data.status == "OK"){
                 poiDetail.address = data.result.formatted_address;
@@ -404,27 +404,27 @@ var World = {
 		World.updateStatusMessage('Requesting places from web-service');
         switch(World.selectedFilter) {
            case "all" :
-              var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&key=AIzaSyAC05uwYBK-r3NF3rqzXPaa22uZPDz9JcU";
+              var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&key=AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk";
 
               break;
 
            case "stores" : //TODO ver
-              var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=store&key=AIzaSyAC05uwYBK-r3NF3rqzXPaa22uZPDz9JcU";
+              var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=store&key=AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk";
 
               break;
 
            case "restaurants" :
-             var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=restaurant&key=AIzaSyAC05uwYBK-r3NF3rqzXPaa22uZPDz9JcU";
+             var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=restaurant&key=AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk";
 
              break;
 
            case "visit" : //TODO Ver
-              var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=park&key=AIzaSyAC05uwYBK-r3NF3rqzXPaa22uZPDz9JcU";
+              var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=park&key=AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk";
 
              break;
 
            case "cafe" : //TODO Ver
-             var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=cafe&key=AIzaSyAC05uwYBK-r3NF3rqzXPaa22uZPDz9JcU";
+             var serverUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=1500&type=cafe&key=AIzaSyBPoH9iSOPMqBKTiDsMC9RUjAOFeUYCiRk";
 
             break;
         }
